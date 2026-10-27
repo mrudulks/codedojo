@@ -1,0 +1,66 @@
+{
+  "id": "is-palindrome",
+  "mode": "solve",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 1,
+  "tags": [
+    "strings"
+  ],
+  "title": "Palindrome check",
+  "prompt": "Return true if `text` reads the same forwards and backwards, ignoring case and any character that is not a letter or digit.",
+  "functionName": {
+    "javascript": "isPalindrome",
+    "typescript": "isPalindrome",
+    "python": "is_palindrome"
+  },
+  "starter": {
+    "javascript": "function isPalindrome(text) {\n  \n}",
+    "typescript": "function isPalindrome(text: string): boolean {\n  \n}",
+    "python": "def is_palindrome(text):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        "racecar"
+      ],
+      "expected": true
+    },
+    {
+      "args": [
+        "A man, a plan, a canal: Panama"
+      ],
+      "expected": true
+    },
+    {
+      "args": [
+        "hello"
+      ],
+      "expected": false
+    },
+    {
+      "args": [
+        ""
+      ],
+      "expected": true
+    },
+    {
+      "args": [
+        "No 'x' in Nixon"
+      ],
+      "expected": true
+    }
+  ],
+  "hints": [
+    "First build a cleaned string with only lowercase letters and digits.",
+    "Compare it with its reverse, or walk two pointers towards the middle."
+  ],
+  "solution": {
+    "javascript": "function isPalindrome(text) {\n  const clean = text.toLowerCase().replace(/[^a-z0-9]/g, '')\n  return clean === [...clean].reverse().join('')\n}",
+    "typescript": "function isPalindrome(text: string): boolean {\n  const clean = text.toLowerCase().replace(/[^a-z0-9]/g, '')\n  return clean === [...clean].reverse().join('')\n}",
+    "python": "def is_palindrome(text):\n    clean = [c.lower() for c in text if c.isalnum()]\n    return clean == clean[::-1]"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "predict-py-mutable-default",
+  "mode": "predict",
+  "languages": [
+    "python"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "functions"
+  ],
+  "title": "Mutable default arguments",
+  "prompt": "Type exactly what this program prints.",
+  "code": {
+    "python": "def add_item(item, bucket=[]):\n    bucket.append(item)\n    return bucket\n\na = add_item(1)\nb = add_item(2)\nc = add_item(3, [])\nprint(a, b, c)\nprint(a is b)"
+  },
+  "hints": [
+    "Default values are evaluated once, when the function is defined."
+  ]
+}

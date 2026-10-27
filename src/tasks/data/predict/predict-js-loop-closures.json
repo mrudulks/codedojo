@@ -1,0 +1,21 @@
+{
+  "id": "predict-js-loop-closures",
+  "mode": "predict",
+  "languages": [
+    "javascript"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "closures",
+    "async"
+  ],
+  "title": "Closures in loops",
+  "prompt": "Type exactly what this program prints, one line per console.log.",
+  "code": {
+    "javascript": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log('var', i), 0)\n}\nfor (let j = 0; j < 3; j++) {\n  setTimeout(() => console.log('let', j), 0)\n}\nconsole.log('done')"
+  },
+  "hints": [
+    "setTimeout callbacks run after all synchronous code.",
+    "`var` has one binding for the whole loop; `let` gets a new one per iteration."
+  ]
+}

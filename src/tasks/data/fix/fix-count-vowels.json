@@ -1,0 +1,53 @@
+{
+  "id": "fix-count-vowels",
+  "mode": "fix",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 1,
+  "tags": [
+    "strings"
+  ],
+  "title": "Count vowels",
+  "prompt": "`countVowels` should count the vowels (a, e, i, o, u) in a string regardless of case. One test fails.",
+  "functionName": {
+    "javascript": "countVowels",
+    "typescript": "countVowels",
+    "python": "count_vowels"
+  },
+  "starter": {
+    "javascript": "function countVowels(text) {\n  let count = 0\n  for (const ch of text) {\n    if ('aeiou'.includes(ch)) count++\n  }\n  return count\n}",
+    "typescript": "function countVowels(text: string): number {\n  let count = 0\n  for (const ch of text) {\n    if ('aeiou'.includes(ch)) count++\n  }\n  return count\n}",
+    "python": "def count_vowels(text):\n    count = 0\n    for ch in text:\n        if ch in \"aeiou\":\n            count += 1\n    return count"
+  },
+  "tests": [
+    {
+      "args": [
+        "hello"
+      ],
+      "expected": 2
+    },
+    {
+      "args": [
+        "rhythm"
+      ],
+      "expected": 0
+    },
+    {
+      "args": [
+        "AEIOU and you"
+      ],
+      "expected": 8
+    }
+  ],
+  "hints": [
+    "What happens to capital letters?"
+  ],
+  "solution": {
+    "javascript": "function countVowels(text) {\n  let count = 0\n  for (const ch of text.toLowerCase()) {\n    if ('aeiou'.includes(ch)) count++\n  }\n  return count\n}",
+    "typescript": "function countVowels(text: string): number {\n  let count = 0\n  for (const ch of text.toLowerCase()) {\n    if ('aeiou'.includes(ch)) count++\n  }\n  return count\n}",
+    "python": "def count_vowels(text):\n    count = 0\n    for ch in text.lower():\n        if ch in \"aeiou\":\n            count += 1\n    return count"
+  }
+}

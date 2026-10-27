@@ -1,0 +1,20 @@
+{
+  "id": "drill-stack-class",
+  "mode": "drill",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "classes"
+  ],
+  "title": "Stack class",
+  "prompt": "Retype the snippet exactly. Indentation counts; Tab inserts spaces.",
+  "snippet": {
+    "javascript": "class Stack {\n  #items = []\n\n  push(item) {\n    this.#items.push(item)\n  }\n\n  pop() {\n    return this.#items.pop()\n  }\n\n  get size() {\n    return this.#items.length\n  }\n}",
+    "typescript": "class Stack<T> {\n  private items: T[] = []\n\n  push(item: T): void {\n    this.items.push(item)\n  }\n\n  pop(): T | undefined {\n    return this.items.pop()\n  }\n\n  get size(): number {\n    return this.items.length\n  }\n}",
+    "python": "class Stack:\n    def __init__(self):\n        self._items = []\n\n    def push(self, item):\n        self._items.append(item)\n\n    def pop(self):\n        return self._items.pop()\n\n    def __len__(self):\n        return len(self._items)"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "id": "reverse-words",
+  "mode": "solve",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 1,
+  "tags": [
+    "strings"
+  ],
+  "title": "Reverse words",
+  "prompt": "Return the words of `sentence` in reverse order, joined by single spaces. Words are separated by one or more spaces; ignore leading and trailing spaces.",
+  "functionName": {
+    "javascript": "reverseWords",
+    "typescript": "reverseWords",
+    "python": "reverse_words"
+  },
+  "starter": {
+    "javascript": "function reverseWords(sentence) {\n  \n}",
+    "typescript": "function reverseWords(sentence: string): string {\n  \n}",
+    "python": "def reverse_words(sentence):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        "hello world"
+      ],
+      "expected": "world hello"
+    },
+    {
+      "args": [
+        "  practice makes   progress "
+      ],
+      "expected": "progress makes practice"
+    },
+    {
+      "args": [
+        "single"
+      ],
+      "expected": "single"
+    },
+    {
+      "args": [
+        ""
+      ],
+      "expected": ""
+    }
+  ],
+  "hints": [
+    "Split on whitespace, but drop the empty pieces.",
+    "Reverse the list of words, then join with a single space."
+  ],
+  "solution": {
+    "javascript": "function reverseWords(sentence) {\n  return sentence.split(' ').filter((w) => w !== '').reverse().join(' ')\n}",
+    "typescript": "function reverseWords(sentence: string): string {\n  return sentence.split(' ').filter((w) => w !== '').reverse().join(' ')\n}",
+    "python": "def reverse_words(sentence):\n    return \" \".join(reversed(sentence.split()))"
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "id": "translate-rotate-matrix",
+  "mode": "translate",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "arrays",
+    "matrix"
+  ],
+  "title": "Rotate a matrix",
+  "prompt": "Rewrite the shown function in your language: return a new matrix rotated 90 degrees clockwise.",
+  "functionName": {
+    "javascript": "rotate",
+    "typescript": "rotate",
+    "python": "rotate"
+  },
+  "source": {
+    "javascript": "function rotate(matrix) {\n  const rows = matrix.length\n  const cols = matrix[0].length\n  const out = []\n  for (let c = 0; c < cols; c++) {\n    const row = []\n    for (let r = rows - 1; r >= 0; r--) row.push(matrix[r][c])\n    out.push(row)\n  }\n  return out\n}",
+    "typescript": "function rotate(matrix: number[][]): number[][] {\n  const rows = matrix.length\n  const cols = matrix[0].length\n  const out: number[][] = []\n  for (let c = 0; c < cols; c++) {\n    const row: number[] = []\n    for (let r = rows - 1; r >= 0; r--) row.push(matrix[r][c])\n    out.push(row)\n  }\n  return out\n}",
+    "python": "def rotate(matrix):\n    return [list(row) for row in zip(*matrix[::-1])]"
+  },
+  "starter": {
+    "javascript": "function rotate(matrix) {\n  \n}",
+    "typescript": "function rotate(matrix: number[][]): number[][] {\n  \n}",
+    "python": "def rotate(matrix):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      ],
+      "expected": [
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          2
+        ]
+      ]
+    },
+    {
+      "args": [
+        [
+          [
+            1,
+            2,
+            3
+          ]
+        ]
+      ],
+      "expected": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "args": [
+        [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            4,
+            5,
+            6
+          ],
+          [
+            7,
+            8,
+            9
+          ]
+        ]
+      ],
+      "expected": [
+        [
+          7,
+          4,
+          1
+        ],
+        [
+          8,
+          5,
+          2
+        ],
+        [
+          9,
+          6,
+          3
+        ]
+      ]
+    }
+  ]
+}

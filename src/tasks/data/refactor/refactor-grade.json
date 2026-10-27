@@ -1,0 +1,105 @@
+{
+  "id": "refactor-grade",
+  "mode": "refactor",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 1,
+  "tags": [
+    "conditionals"
+  ],
+  "title": "Grade letters",
+  "prompt": "`grade` turns a score into a letter: 90+ is A, 80+ B, 70+ C, 60+ D, below that F. It works, but it is repetitive. Make it short and clear; the tests must still pass.",
+  "functionName": {
+    "javascript": "grade",
+    "typescript": "grade",
+    "python": "grade"
+  },
+  "starter": {
+    "javascript": "function grade(score) {\n  var letter\n  if (score >= 90) {\n    letter = 'A'\n  } else {\n    if (score >= 80) {\n      letter = 'B'\n    } else {\n      if (score >= 70) {\n        letter = 'C'\n      } else {\n        if (score >= 60) {\n          letter = 'D'\n        } else {\n          letter = 'F'\n        }\n      }\n    }\n  }\n  return letter\n}",
+    "typescript": "function grade(score: number): string {\n  let letter: string\n  if (score >= 90) {\n    letter = 'A'\n  } else {\n    if (score >= 80) {\n      letter = 'B'\n    } else {\n      if (score >= 70) {\n        letter = 'C'\n      } else {\n        if (score >= 60) {\n          letter = 'D'\n        } else {\n          letter = 'F'\n        }\n      }\n    }\n  }\n  return letter\n}",
+    "python": "def grade(score):\n    letter = None\n    if score >= 90:\n        letter = \"A\"\n    else:\n        if score >= 80:\n            letter = \"B\"\n        else:\n            if score >= 70:\n                letter = \"C\"\n            else:\n                if score >= 60:\n                    letter = \"D\"\n                else:\n                    letter = \"F\"\n    return letter"
+  },
+  "constraints": {
+    "javascript": {
+      "maxLines": 8,
+      "banned": [
+        {
+          "pattern": "\\bvar\\b",
+          "message": "No var: use const or let"
+        },
+        {
+          "pattern": "else\\s*\\{\\s*\\n\\s*if",
+          "message": "No if nested inside else: use else if or early returns"
+        }
+      ]
+    },
+    "typescript": {
+      "maxLines": 8,
+      "banned": [
+        {
+          "pattern": "else\\s*\\{\\s*\\n\\s*if",
+          "message": "No if nested inside else: use else if or early returns"
+        }
+      ]
+    },
+    "python": {
+      "maxLines": 8,
+      "banned": [
+        {
+          "pattern": "else:\\s*\\n\\s*if",
+          "message": "No if nested inside else: use elif or early returns"
+        }
+      ]
+    }
+  },
+  "tests": [
+    {
+      "args": [
+        95
+      ],
+      "expected": "A"
+    },
+    {
+      "args": [
+        90
+      ],
+      "expected": "A"
+    },
+    {
+      "args": [
+        85
+      ],
+      "expected": "B"
+    },
+    {
+      "args": [
+        70
+      ],
+      "expected": "C"
+    },
+    {
+      "args": [
+        61
+      ],
+      "expected": "D"
+    },
+    {
+      "args": [
+        12
+      ],
+      "expected": "F"
+    }
+  ],
+  "hints": [
+    "Return as soon as you know the answer.",
+    "Or loop over a list of (threshold, letter) pairs."
+  ],
+  "solution": {
+    "javascript": "function grade(score) {\n  if (score >= 90) return 'A'\n  if (score >= 80) return 'B'\n  if (score >= 70) return 'C'\n  if (score >= 60) return 'D'\n  return 'F'\n}",
+    "typescript": "function grade(score: number): string {\n  if (score >= 90) return 'A'\n  if (score >= 80) return 'B'\n  if (score >= 70) return 'C'\n  if (score >= 60) return 'D'\n  return 'F'\n}",
+    "python": "def grade(score):\n    for threshold, letter in ((90, \"A\"), (80, \"B\"), (70, \"C\"), (60, \"D\")):\n        if score >= threshold:\n            return letter\n    return \"F\""
+  }
+}

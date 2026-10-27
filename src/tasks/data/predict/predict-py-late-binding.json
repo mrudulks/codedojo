@@ -1,0 +1,20 @@
+{
+  "id": "predict-py-late-binding",
+  "mode": "predict",
+  "languages": [
+    "python"
+  ],
+  "difficulty": 3,
+  "tags": [
+    "closures"
+  ],
+  "title": "Late-binding closures",
+  "prompt": "Type exactly what this program prints.",
+  "code": {
+    "python": "funcs = [lambda: i * 10 for i in range(3)]\nprint([f() for f in funcs])\n\nfixed = [lambda i=i: i * 10 for i in range(3)]\nprint([f() for f in fixed])\n\ntotal = 0\nfor i in range(4):\n    total += i\nprint(i, total)"
+  },
+  "hints": [
+    "A closure looks up the variable when it is called, not when it is created.",
+    "A default argument captures the value at definition time."
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "id": "refactor-has-duplicates",
+  "mode": "refactor",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "arrays",
+    "hashmap"
+  ],
+  "title": "Duplicates without nested loops",
+  "prompt": "`hasDuplicates` compares every pair, which is slow for big lists. Rewrite it with a single pass (no nested loops); the tests must still pass.",
+  "functionName": {
+    "javascript": "hasDuplicates",
+    "typescript": "hasDuplicates",
+    "python": "has_duplicates"
+  },
+  "starter": {
+    "javascript": "function hasDuplicates(items) {\n  for (let i = 0; i < items.length; i++) {\n    for (let j = 0; j < items.length; j++) {\n      if (i !== j && items[i] === items[j]) {\n        return true\n      }\n    }\n  }\n  return false\n}",
+    "typescript": "function hasDuplicates(items: string[]): boolean {\n  for (let i = 0; i < items.length; i++) {\n    for (let j = 0; j < items.length; j++) {\n      if (i !== j && items[i] === items[j]) {\n        return true\n      }\n    }\n  }\n  return false\n}",
+    "python": "def has_duplicates(items):\n    for i in range(len(items)):\n        for j in range(len(items)):\n            if i != j and items[i] == items[j]:\n                return True\n    return False"
+  },
+  "constraints": {
+    "javascript": {
+      "maxLines": 8,
+      "banned": [
+        {
+          "pattern": "\\bfor\\b[\\s\\S]*\\bfor\\b",
+          "message": "At most one loop"
+        },
+        {
+          "pattern": "\\.(indexOf|includes)\\(",
+          "message": "No indexOf/includes: they hide a second loop"
+        }
+      ]
+    },
+    "typescript": {
+      "maxLines": 8,
+      "banned": [
+        {
+          "pattern": "\\bfor\\b[\\s\\S]*\\bfor\\b",
+          "message": "At most one loop"
+        },
+        {
+          "pattern": "\\.(indexOf|includes)\\(",
+          "message": "No indexOf/includes: they hide a second loop"
+        }
+      ]
+    },
+    "python": {
+      "maxLines": 6,
+      "banned": [
+        {
+          "pattern": "\\bfor\\b[\\s\\S]*\\bfor\\b",
+          "message": "At most one loop"
+        },
+        {
+          "pattern": "\\.count\\(",
+          "message": "No .count(): it hides a second loop"
+        }
+      ]
+    }
+  },
+  "tests": [
+    {
+      "args": [
+        [
+          "a",
+          "b",
+          "c"
+        ]
+      ],
+      "expected": false
+    },
+    {
+      "args": [
+        [
+          "a",
+          "b",
+          "a"
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "args": [
+        []
+      ],
+      "expected": false
+    },
+    {
+      "args": [
+        [
+          "x",
+          "x"
+        ]
+      ],
+      "expected": true
+    }
+  ],
+  "hints": [
+    "A set remembers what you have seen in constant time.",
+    "Comparing sizes of the list and a set built from it also works."
+  ],
+  "solution": {
+    "javascript": "function hasDuplicates(items) {\n  return new Set(items).size !== items.length\n}",
+    "typescript": "function hasDuplicates(items: string[]): boolean {\n  const seen = new Set<string>()\n  for (const item of items) {\n    if (seen.has(item)) return true\n    seen.add(item)\n  }\n  return false\n}",
+    "python": "def has_duplicates(items):\n    return len(set(items)) != len(items)"
+  }
+}

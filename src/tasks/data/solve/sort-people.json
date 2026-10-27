@@ -1,0 +1,89 @@
+{
+  "id": "sort-people",
+  "mode": "solve",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "sorting",
+    "objects"
+  ],
+  "title": "Sort people by age",
+  "prompt": "`people` is a list of objects with `name` and `age`. Return their names sorted by age ascending; people with the same age are sorted by name alphabetically.",
+  "functionName": {
+    "javascript": "sortPeople",
+    "typescript": "sortPeople",
+    "python": "sort_people"
+  },
+  "starter": {
+    "javascript": "function sortPeople(people) {\n  \n}",
+    "typescript": "interface Person {\n  name: string\n  age: number\n}\n\nfunction sortPeople(people: Person[]): string[] {\n  \n}",
+    "python": "def sort_people(people):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        [
+          {
+            "name": "Ana",
+            "age": 31
+          },
+          {
+            "name": "Bo",
+            "age": 25
+          },
+          {
+            "name": "Cy",
+            "age": 40
+          }
+        ]
+      ],
+      "expected": [
+        "Bo",
+        "Ana",
+        "Cy"
+      ]
+    },
+    {
+      "args": [
+        [
+          {
+            "name": "Zed",
+            "age": 20
+          },
+          {
+            "name": "Amy",
+            "age": 20
+          },
+          {
+            "name": "Kim",
+            "age": 19
+          }
+        ]
+      ],
+      "expected": [
+        "Kim",
+        "Amy",
+        "Zed"
+      ]
+    },
+    {
+      "args": [
+        []
+      ],
+      "expected": []
+    }
+  ],
+  "hints": [
+    "Sort with a comparator that compares age first.",
+    "When ages are equal, compare names (localeCompare in JS; a tuple key in Python)."
+  ],
+  "solution": {
+    "javascript": "function sortPeople(people) {\n  return [...people]\n    .sort((a, b) => a.age - b.age || a.name.localeCompare(b.name))\n    .map((p) => p.name)\n}",
+    "typescript": "interface Person {\n  name: string\n  age: number\n}\n\nfunction sortPeople(people: Person[]): string[] {\n  return [...people]\n    .sort((a, b) => a.age - b.age || a.name.localeCompare(b.name))\n    .map((p) => p.name)\n}",
+    "python": "def sort_people(people):\n    ordered = sorted(people, key=lambda p: (p[\"age\"], p[\"name\"]))\n    return [p[\"name\"] for p in ordered]"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "count-paths",
+  "mode": "solve",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 3,
+  "tags": [
+    "recursion"
+  ],
+  "title": "Grid paths",
+  "prompt": "Count the paths from the top-left to the bottom-right corner of a grid with `rows` × `cols` cells, moving only right or down. Large grids must finish quickly.",
+  "functionName": {
+    "javascript": "countPaths",
+    "typescript": "countPaths",
+    "python": "count_paths"
+  },
+  "starter": {
+    "javascript": "function countPaths(rows, cols) {\n  \n}",
+    "typescript": "function countPaths(rows: number, cols: number): number {\n  \n}",
+    "python": "def count_paths(rows, cols):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        1,
+        1
+      ],
+      "expected": 1
+    },
+    {
+      "args": [
+        2,
+        2
+      ],
+      "expected": 2
+    },
+    {
+      "args": [
+        3,
+        7
+      ],
+      "expected": 28
+    },
+    {
+      "args": [
+        16,
+        16
+      ],
+      "expected": 155117520
+    }
+  ],
+  "hints": [
+    "paths(r, c) = paths(r - 1, c) + paths(r, c - 1), and a single row or column has one path.",
+    "Plain recursion repeats work; remember results you already computed."
+  ],
+  "solution": {
+    "javascript": "function countPaths(rows, cols, memo = new Map()) {\n  if (rows === 1 || cols === 1) return 1\n  const key = rows + ',' + cols\n  if (!memo.has(key)) {\n    memo.set(key, countPaths(rows - 1, cols, memo) + countPaths(rows, cols - 1, memo))\n  }\n  return memo.get(key)\n}",
+    "typescript": "function countPaths(rows: number, cols: number, memo = new Map<string, number>()): number {\n  if (rows === 1 || cols === 1) return 1\n  const key = rows + ',' + cols\n  const known = memo.get(key)\n  if (known !== undefined) return known\n  const total = countPaths(rows - 1, cols, memo) + countPaths(rows, cols - 1, memo)\n  memo.set(key, total)\n  return total\n}",
+    "python": "from functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef count_paths(rows, cols):\n    if rows == 1 or cols == 1:\n        return 1\n    return count_paths(rows - 1, cols) + count_paths(rows, cols - 1)"
+  }
+}

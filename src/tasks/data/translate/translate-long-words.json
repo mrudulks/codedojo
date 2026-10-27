@@ -1,0 +1,61 @@
+{
+  "id": "translate-long-words",
+  "mode": "translate",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 1,
+  "tags": [
+    "strings",
+    "arrays"
+  ],
+  "title": "Long words",
+  "prompt": "Rewrite the shown function in your language: return the words of `text` longer than `n` characters, uppercased, in their original order.",
+  "functionName": {
+    "javascript": "longWords",
+    "typescript": "longWords",
+    "python": "long_words"
+  },
+  "source": {
+    "javascript": "function longWords(text, n) {\n  return text\n    .split(' ')\n    .filter((word) => word.length > n)\n    .map((word) => word.toUpperCase())\n}",
+    "typescript": "function longWords(text: string, n: number): string[] {\n  return text\n    .split(' ')\n    .filter((word) => word.length > n)\n    .map((word) => word.toUpperCase())\n}",
+    "python": "def long_words(text, n):\n    return [word.upper() for word in text.split(\" \") if len(word) > n]"
+  },
+  "starter": {
+    "javascript": "function longWords(text, n) {\n  \n}",
+    "typescript": "function longWords(text: string, n: number): string[] {\n  \n}",
+    "python": "def long_words(text, n):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        "the quick brown fox",
+        3
+      ],
+      "expected": [
+        "QUICK",
+        "BROWN"
+      ]
+    },
+    {
+      "args": [
+        "a bb ccc",
+        5
+      ],
+      "expected": []
+    },
+    {
+      "args": [
+        "typing builds memory",
+        0
+      ],
+      "expected": [
+        "TYPING",
+        "BUILDS",
+        "MEMORY"
+      ]
+    }
+  ]
+}

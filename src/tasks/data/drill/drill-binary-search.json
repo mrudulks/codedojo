@@ -1,0 +1,20 @@
+{
+  "id": "drill-binary-search",
+  "mode": "drill",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "searching"
+  ],
+  "title": "Binary search",
+  "prompt": "Retype the snippet exactly. Indentation counts; Tab inserts spaces.",
+  "snippet": {
+    "javascript": "function binarySearch(items, target) {\n  let lo = 0\n  let hi = items.length - 1\n  while (lo <= hi) {\n    const mid = Math.floor((lo + hi) / 2)\n    if (items[mid] === target) return mid\n    if (items[mid] < target) lo = mid + 1\n    else hi = mid - 1\n  }\n  return -1\n}",
+    "typescript": "function binarySearch(items: number[], target: number): number {\n  let lo = 0\n  let hi = items.length - 1\n  while (lo <= hi) {\n    const mid = Math.floor((lo + hi) / 2)\n    if (items[mid] === target) return mid\n    if (items[mid] < target) lo = mid + 1\n    else hi = mid - 1\n  }\n  return -1\n}",
+    "python": "def binary_search(items, target):\n    lo, hi = 0, len(items) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if items[mid] == target:\n            return mid\n        if items[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return -1"
+  }
+}

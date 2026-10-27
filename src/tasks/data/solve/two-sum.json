@@ -1,0 +1,95 @@
+{
+  "id": "two-sum",
+  "mode": "solve",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "arrays",
+    "hashmap"
+  ],
+  "title": "Two sum",
+  "prompt": "Return the indices of the two numbers in `nums` that add up to `target`, smaller index first. Exactly one answer exists.",
+  "functionName": {
+    "javascript": "twoSum",
+    "typescript": "twoSum",
+    "python": "two_sum"
+  },
+  "starter": {
+    "javascript": "function twoSum(nums, target) {\n  \n}",
+    "typescript": "function twoSum(nums: number[], target: number): number[] {\n  \n}",
+    "python": "def two_sum(nums, target):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        [
+          2,
+          7,
+          11,
+          15
+        ],
+        9
+      ],
+      "expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "args": [
+        [
+          3,
+          3
+        ],
+        6
+      ],
+      "expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "args": [
+        [
+          3,
+          2,
+          4
+        ],
+        6
+      ],
+      "expected": [
+        1,
+        2
+      ]
+    },
+    {
+      "args": [
+        [
+          -1,
+          -2,
+          -3,
+          -4,
+          -5
+        ],
+        -8
+      ],
+      "expected": [
+        2,
+        4
+      ]
+    }
+  ],
+  "hints": [
+    "What if you remembered every number you have already seen?",
+    "Store value → index in a map; for each number, look up target - number."
+  ],
+  "solution": {
+    "javascript": "function twoSum(nums, target) {\n  const seen = new Map()\n  for (let i = 0; i < nums.length; i++) {\n    const j = seen.get(target - nums[i])\n    if (j !== undefined) return [j, i]\n    seen.set(nums[i], i)\n  }\n  return []\n}",
+    "typescript": "function twoSum(nums: number[], target: number): number[] {\n  const seen = new Map<number, number>()\n  for (let i = 0; i < nums.length; i++) {\n    const n = nums[i]\n    const j = seen.get(target - n)\n    if (j !== undefined) return [j, i]\n    seen.set(n, i)\n  }\n  return []\n}",
+    "python": "def two_sum(nums, target):\n    seen = {}\n    for i, n in enumerate(nums):\n        if target - n in seen:\n            return [seen[target - n], i]\n        seen[n] = i\n    return []"
+  }
+}

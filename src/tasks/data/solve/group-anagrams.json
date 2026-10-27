@@ -1,0 +1,90 @@
+{
+  "id": "group-anagrams",
+  "mode": "solve",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 3,
+  "tags": [
+    "strings",
+    "objects",
+    "sorting"
+  ],
+  "title": "Group anagrams",
+  "prompt": "Group the words that are anagrams of each other. Sort the words inside each group alphabetically, then sort the groups by their first word.",
+  "functionName": {
+    "javascript": "groupAnagrams",
+    "typescript": "groupAnagrams",
+    "python": "group_anagrams"
+  },
+  "starter": {
+    "javascript": "function groupAnagrams(words) {\n  \n}",
+    "typescript": "function groupAnagrams(words: string[]): string[][] {\n  \n}",
+    "python": "def group_anagrams(words):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        [
+          "eat",
+          "tea",
+          "tan",
+          "ate",
+          "nat",
+          "bat"
+        ]
+      ],
+      "expected": [
+        [
+          "ate",
+          "eat",
+          "tea"
+        ],
+        [
+          "bat"
+        ],
+        [
+          "nat",
+          "tan"
+        ]
+      ]
+    },
+    {
+      "args": [
+        [
+          "listen",
+          "silent",
+          "enlist",
+          "google"
+        ]
+      ],
+      "expected": [
+        [
+          "enlist",
+          "listen",
+          "silent"
+        ],
+        [
+          "google"
+        ]
+      ]
+    },
+    {
+      "args": [
+        []
+      ],
+      "expected": []
+    }
+  ],
+  "hints": [
+    "Two words are anagrams when their sorted letters are equal.",
+    "Use the sorted letters as a key in a map of key → words."
+  ],
+  "solution": {
+    "javascript": "function groupAnagrams(words) {\n  const groups = new Map()\n  for (const word of words) {\n    const key = [...word].sort().join('')\n    if (!groups.has(key)) groups.set(key, [])\n    groups.get(key).push(word)\n  }\n  return [...groups.values()]\n    .map((g) => g.sort())\n    .sort((a, b) => a[0].localeCompare(b[0]))\n}",
+    "typescript": "function groupAnagrams(words: string[]): string[][] {\n  const groups = new Map<string, string[]>()\n  for (const word of words) {\n    const key = [...word].sort().join('')\n    const group = groups.get(key) ?? []\n    group.push(word)\n    groups.set(key, group)\n  }\n  return [...groups.values()]\n    .map((g) => g.sort())\n    .sort((a, b) => a[0].localeCompare(b[0]))\n}",
+    "python": "def group_anagrams(words):\n    groups = {}\n    for word in words:\n        groups.setdefault(\"\".join(sorted(word)), []).append(word)\n    return sorted(sorted(g) for g in groups.values())"
+  }
+}

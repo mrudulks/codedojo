@@ -1,0 +1,21 @@
+{
+  "id": "drill-pipeline",
+  "mode": "drill",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 1,
+  "tags": [
+    "arrays",
+    "functional"
+  ],
+  "title": "Filter, map, reduce",
+  "prompt": "Retype the snippet exactly. Brackets and quotes are not closed for you.",
+  "snippet": {
+    "javascript": "const orders = [{ total: 40, paid: true }, { total: 15, paid: false }]\nconst revenue = orders\n  .filter((o) => o.paid)\n  .map((o) => o.total * 1.2)\n  .reduce((sum, t) => sum + t, 0)\nconsole.log(`Revenue: ${revenue.toFixed(2)}`)",
+    "typescript": "type Order = { total: number; paid: boolean }\nconst orders: Order[] = [{ total: 40, paid: true }, { total: 15, paid: false }]\nconst revenue = orders\n  .filter((o) => o.paid)\n  .map((o) => o.total * 1.2)\n  .reduce((sum, t) => sum + t, 0)\nconsole.log(`Revenue: ${revenue.toFixed(2)}`)",
+    "python": "orders = [{\"total\": 40, \"paid\": True}, {\"total\": 15, \"paid\": False}]\nrevenue = sum(o[\"total\"] * 1.2 for o in orders if o[\"paid\"])\nsquares = {n: n ** 2 for n in range(5) if n % 2 == 0}\nprint(f\"Revenue: {revenue:.2f}\", squares)"
+  }
+}

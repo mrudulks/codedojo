@@ -1,0 +1,83 @@
+{
+  "id": "running-sum",
+  "mode": "solve",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 1,
+  "tags": [
+    "arrays"
+  ],
+  "title": "Running sum",
+  "prompt": "Return a new array where each element is the sum of all elements of `nums` up to and including that position.",
+  "functionName": {
+    "javascript": "runningSum",
+    "typescript": "runningSum",
+    "python": "running_sum"
+  },
+  "starter": {
+    "javascript": "function runningSum(nums) {\n  \n}",
+    "typescript": "function runningSum(nums: number[]): number[] {\n  \n}",
+    "python": "def running_sum(nums):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expected": [
+        1,
+        3,
+        6,
+        10
+      ]
+    },
+    {
+      "args": [
+        [
+          5
+        ]
+      ],
+      "expected": [
+        5
+      ]
+    },
+    {
+      "args": [
+        []
+      ],
+      "expected": []
+    },
+    {
+      "args": [
+        [
+          3,
+          -1,
+          0,
+          2
+        ]
+      ],
+      "expected": [
+        3,
+        2,
+        2,
+        4
+      ]
+    }
+  ],
+  "hints": [
+    "Keep a total as you walk through the array and push it after each step."
+  ],
+  "solution": {
+    "javascript": "function runningSum(nums) {\n  let total = 0\n  return nums.map((n) => (total += n))\n}",
+    "typescript": "function runningSum(nums: number[]): number[] {\n  let total = 0\n  return nums.map((n) => (total += n))\n}",
+    "python": "def running_sum(nums):\n    total = 0\n    out = []\n    for n in nums:\n        total += n\n        out.append(total)\n    return out"
+  }
+}

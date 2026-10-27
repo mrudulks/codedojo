@@ -1,0 +1,20 @@
+{
+  "id": "predict-js-event-loop",
+  "mode": "predict",
+  "languages": [
+    "javascript"
+  ],
+  "difficulty": 3,
+  "tags": [
+    "async"
+  ],
+  "title": "Event loop order",
+  "prompt": "Type exactly what this program prints.",
+  "code": {
+    "javascript": "console.log('1 start')\nsetTimeout(() => console.log('2 timeout'), 0)\nPromise.resolve().then(() => console.log('3 promise'))\nqueueMicrotask(() => console.log('4 microtask'))\n;(async () => {\n  console.log('5 async body')\n  await null\n  console.log('6 after await')\n})()\nconsole.log('7 end')"
+  },
+  "hints": [
+    "Synchronous code first, including the part of an async function before its first await.",
+    "Microtasks (promises, queueMicrotask, code after await) run in the order they were queued, before any timeout."
+  ]
+}

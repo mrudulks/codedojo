@@ -1,0 +1,21 @@
+{
+  "id": "predict-ts-sort",
+  "mode": "predict",
+  "languages": [
+    "typescript"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "sorting",
+    "arrays"
+  ],
+  "title": "Default sort order",
+  "prompt": "Type exactly what this program prints.",
+  "code": {
+    "typescript": "const nums: number[] = [10, 9, 1, 100, 25]\nconsole.log([...nums].sort())\nconsole.log([...nums].sort((a, b) => a - b))\nconst words = ['banana', 'Cherry', 'apple']\nconsole.log(words.sort())\nconsole.log(nums.indexOf(100), nums.includes(25))"
+  },
+  "hints": [
+    "Without a comparator, sort compares values as strings.",
+    "Uppercase letters come before lowercase in UTF-16 order."
+  ]
+}

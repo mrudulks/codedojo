@@ -1,0 +1,147 @@
+{
+  "id": "merge-intervals",
+  "mode": "solve",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 3,
+  "tags": [
+    "arrays",
+    "sorting"
+  ],
+  "title": "Merge intervals",
+  "prompt": "`intervals` is a list of [start, end] pairs in any order. Merge all overlapping intervals (touching ones like [1, 2] and [2, 3] overlap) and return them sorted by start.",
+  "functionName": {
+    "javascript": "mergeIntervals",
+    "typescript": "mergeIntervals",
+    "python": "merge_intervals"
+  },
+  "starter": {
+    "javascript": "function mergeIntervals(intervals) {\n  \n}",
+    "typescript": "function mergeIntervals(intervals: [number, number][]): [number, number][] {\n  \n}",
+    "python": "def merge_intervals(intervals):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            8,
+            10
+          ],
+          [
+            15,
+            18
+          ]
+        ]
+      ],
+      "expected": [
+        [
+          1,
+          6
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          15,
+          18
+        ]
+      ]
+    },
+    {
+      "args": [
+        [
+          [
+            1,
+            4
+          ],
+          [
+            4,
+            5
+          ]
+        ]
+      ],
+      "expected": [
+        [
+          1,
+          5
+        ]
+      ]
+    },
+    {
+      "args": [
+        [
+          [
+            5,
+            7
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      ],
+      "expected": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          7
+        ]
+      ]
+    },
+    {
+      "args": [
+        [
+          [
+            1,
+            10
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      ],
+      "expected": [
+        [
+          1,
+          10
+        ]
+      ]
+    },
+    {
+      "args": [
+        []
+      ],
+      "expected": []
+    }
+  ],
+  "hints": [
+    "Sort by start first.",
+    "Walk through: if an interval starts before the last merged one ends, extend that one's end."
+  ],
+  "solution": {
+    "javascript": "function mergeIntervals(intervals) {\n  const sorted = [...intervals].sort((a, b) => a[0] - b[0])\n  const out = []\n  for (const [start, end] of sorted) {\n    const last = out[out.length - 1]\n    if (last && start <= last[1]) last[1] = Math.max(last[1], end)\n    else out.push([start, end])\n  }\n  return out\n}",
+    "typescript": "function mergeIntervals(intervals: [number, number][]): [number, number][] {\n  const sorted = [...intervals].sort((a, b) => a[0] - b[0])\n  const out: [number, number][] = []\n  for (const [start, end] of sorted) {\n    const last = out[out.length - 1]\n    if (last && start <= last[1]) last[1] = Math.max(last[1], end)\n    else out.push([start, end])\n  }\n  return out\n}",
+    "python": "def merge_intervals(intervals):\n    out = []\n    for start, end in sorted(intervals):\n        if out and start <= out[-1][1]:\n            out[-1][1] = max(out[-1][1], end)\n        else:\n            out.append([start, end])\n    return out"
+  }
+}

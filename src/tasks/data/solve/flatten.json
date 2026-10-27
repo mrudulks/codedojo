@@ -1,0 +1,113 @@
+{
+  "id": "flatten",
+  "mode": "solve",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "arrays",
+    "recursion"
+  ],
+  "title": "Flatten nested lists",
+  "prompt": "`items` contains numbers and lists, nested to any depth. Return a flat list of all the numbers in order. Do not use a built-in flatten.",
+  "functionName": {
+    "javascript": "flatten",
+    "typescript": "flatten",
+    "python": "flatten"
+  },
+  "starter": {
+    "javascript": "function flatten(items) {\n  \n}",
+    "typescript": "type Nested = number | Nested[]\n\nfunction flatten(items: Nested[]): number[] {\n  \n}",
+    "python": "def flatten(items):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        [
+          1,
+          [
+            2,
+            [
+              3,
+              [
+                4
+              ]
+            ]
+          ]
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "args": [
+        [
+          [],
+          [
+            []
+          ],
+          5
+        ]
+      ],
+      "expected": [
+        5
+      ]
+    },
+    {
+      "args": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "args": [
+        [
+          [
+            [
+              [
+                7
+              ]
+            ]
+          ],
+          8,
+          [
+            9,
+            [
+              10
+            ]
+          ]
+        ]
+      ],
+      "expected": [
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "hints": [
+    "For each item: if it is a list, flatten it and add the result; otherwise add the number.",
+    "Array.isArray / isinstance(item, list) tells the two cases apart."
+  ],
+  "solution": {
+    "javascript": "function flatten(items) {\n  const out = []\n  for (const item of items) {\n    if (Array.isArray(item)) out.push(...flatten(item))\n    else out.push(item)\n  }\n  return out\n}",
+    "typescript": "type Nested = number | Nested[]\n\nfunction flatten(items: Nested[]): number[] {\n  const out: number[] = []\n  for (const item of items) {\n    if (Array.isArray(item)) out.push(...flatten(item))\n    else out.push(item)\n  }\n  return out\n}",
+    "python": "def flatten(items):\n    out = []\n    for item in items:\n        if isinstance(item, list):\n            out.extend(flatten(item))\n        else:\n            out.append(item)\n    return out"
+  }
+}

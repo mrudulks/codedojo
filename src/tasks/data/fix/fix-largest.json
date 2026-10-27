@@ -1,0 +1,71 @@
+{
+  "id": "fix-largest",
+  "mode": "fix",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 1,
+  "tags": [
+    "arrays"
+  ],
+  "title": "Largest number",
+  "prompt": "`largest` should return the biggest number in a non-empty list, but some tests fail. Find the bug and fix it.",
+  "functionName": {
+    "javascript": "largest",
+    "typescript": "largest",
+    "python": "largest"
+  },
+  "starter": {
+    "javascript": "function largest(nums) {\n  let best = 0\n  for (const n of nums) {\n    if (n > best) best = n\n  }\n  return best\n}",
+    "typescript": "function largest(nums: number[]): number {\n  let best = 0\n  for (const n of nums) {\n    if (n > best) best = n\n  }\n  return best\n}",
+    "python": "def largest(nums):\n    best = 0\n    for n in nums:\n        if n > best:\n            best = n\n    return best"
+  },
+  "tests": [
+    {
+      "args": [
+        [
+          3,
+          9,
+          2
+        ]
+      ],
+      "expected": 9
+    },
+    {
+      "args": [
+        [
+          -5,
+          -2,
+          -8
+        ]
+      ],
+      "expected": -2
+    },
+    {
+      "args": [
+        [
+          0
+        ]
+      ],
+      "expected": 0
+    },
+    {
+      "args": [
+        [
+          -1
+        ]
+      ],
+      "expected": -1
+    }
+  ],
+  "hints": [
+    "Which starting value can be bigger than every number in the list?"
+  ],
+  "solution": {
+    "javascript": "function largest(nums) {\n  let best = nums[0]\n  for (const n of nums) {\n    if (n > best) best = n\n  }\n  return best\n}",
+    "typescript": "function largest(nums: number[]): number {\n  let best = nums[0]\n  for (const n of nums) {\n    if (n > best) best = n\n  }\n  return best\n}",
+    "python": "def largest(nums):\n    best = nums[0]\n    for n in nums:\n        if n > best:\n            best = n\n    return best"
+  }
+}

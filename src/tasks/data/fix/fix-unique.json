@@ -1,0 +1,74 @@
+{
+  "id": "fix-unique",
+  "mode": "fix",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "arrays",
+    "hashmap"
+  ],
+  "title": "Remove duplicates, keep order",
+  "prompt": "`unique` should remove duplicate numbers while keeping the order of first appearance. It looks right but the order comes out wrong.",
+  "functionName": {
+    "javascript": "unique",
+    "typescript": "unique",
+    "python": "unique"
+  },
+  "starter": {
+    "javascript": "function unique(nums) {\n  const sorted = [...nums].sort()\n  return sorted.filter((n, i) => i === 0 || n !== sorted[i - 1])\n}",
+    "typescript": "function unique(nums: number[]): number[] {\n  const sorted = [...nums].sort()\n  return sorted.filter((n, i) => i === 0 || n !== sorted[i - 1])\n}",
+    "python": "def unique(nums):\n    return list(set(nums))"
+  },
+  "tests": [
+    {
+      "args": [
+        [
+          3,
+          1,
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        3,
+        1,
+        2
+      ]
+    },
+    {
+      "args": [
+        [
+          10,
+          9,
+          10,
+          100
+        ]
+      ],
+      "expected": [
+        10,
+        9,
+        100
+      ]
+    },
+    {
+      "args": [
+        []
+      ],
+      "expected": []
+    }
+  ],
+  "hints": [
+    "Sorting (or a set) throws away the original order.",
+    "Walk the list once and remember what you have already seen."
+  ],
+  "solution": {
+    "javascript": "function unique(nums) {\n  const seen = new Set()\n  return nums.filter((n) => {\n    if (seen.has(n)) return false\n    seen.add(n)\n    return true\n  })\n}",
+    "typescript": "function unique(nums: number[]): number[] {\n  return [...new Set(nums)]\n}",
+    "python": "def unique(nums):\n    return list(dict.fromkeys(nums))"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "predict-js-equality",
+  "mode": "predict",
+  "languages": [
+    "javascript"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "types",
+    "hoisting"
+  ],
+  "title": "Equality and hoisting",
+  "prompt": "Type exactly what this program prints.",
+  "code": {
+    "javascript": "console.log(0 == '', 0 === '')\nconsole.log(null == undefined, null === undefined)\nconsole.log(NaN == NaN, [1] == 1)\nconsole.log(typeof hoisted, typeof notHoisted)\nfunction hoisted() {}\nvar notHoisted = function () {}\nconsole.log(typeof notHoisted)"
+  },
+  "hints": [
+    "`==` converts types before comparing; `===` never does.",
+    "Function declarations are hoisted with their body; `var` is hoisted without its value."
+  ]
+}

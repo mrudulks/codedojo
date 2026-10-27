@@ -1,0 +1,21 @@
+{
+  "id": "predict-ts-spread",
+  "mode": "predict",
+  "languages": [
+    "typescript"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "objects",
+    "references"
+  ],
+  "title": "Copies and references",
+  "prompt": "Type exactly what this program prints.",
+  "code": {
+    "typescript": "const original = { name: 'Ada', tags: ['math'] }\nconst shallow = { ...original }\nshallow.name = 'Grace'\nshallow.tags.push('code')\nconst deep = structuredClone(original)\ndeep.tags.push('logic')\nconsole.log(original.name, shallow.name)\nconsole.log(original.tags.length, deep.tags.length)\nconsole.log(original.tags === shallow.tags, original.tags === deep.tags)"
+  },
+  "hints": [
+    "Spread copies one level: nested arrays are shared.",
+    "structuredClone copies everything."
+  ]
+}

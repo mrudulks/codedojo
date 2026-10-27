@@ -1,0 +1,71 @@
+{
+  "id": "word-frequency",
+  "mode": "solve",
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "difficulty": 2,
+  "tags": [
+    "strings",
+    "objects"
+  ],
+  "title": "Word frequency",
+  "prompt": "Count how often each word appears in `text`. Words are lowercase letters only: lowercase the text and treat every other character as a separator. Return an object (dict) of word → count.",
+  "functionName": {
+    "javascript": "wordFrequency",
+    "typescript": "wordFrequency",
+    "python": "word_frequency"
+  },
+  "starter": {
+    "javascript": "function wordFrequency(text) {\n  \n}",
+    "typescript": "function wordFrequency(text: string): Record<string, number> {\n  \n}",
+    "python": "def word_frequency(text):\n    "
+  },
+  "tests": [
+    {
+      "args": [
+        "the cat and the hat"
+      ],
+      "expected": {
+        "the": 2,
+        "cat": 1,
+        "and": 1,
+        "hat": 1
+      }
+    },
+    {
+      "args": [
+        "Go, go, GO!"
+      ],
+      "expected": {
+        "go": 3
+      }
+    },
+    {
+      "args": [
+        ""
+      ],
+      "expected": {}
+    },
+    {
+      "args": [
+        "one-two two"
+      ],
+      "expected": {
+        "one": 1,
+        "two": 2
+      }
+    }
+  ],
+  "hints": [
+    "A regular expression can find runs of letters for you.",
+    "Start each count at 0 the first time you see a word."
+  ],
+  "solution": {
+    "javascript": "function wordFrequency(text) {\n  const counts = {}\n  for (const word of text.toLowerCase().match(/[a-z]+/g) ?? []) {\n    counts[word] = (counts[word] ?? 0) + 1\n  }\n  return counts\n}",
+    "typescript": "function wordFrequency(text: string): Record<string, number> {\n  const counts: Record<string, number> = {}\n  for (const word of text.toLowerCase().match(/[a-z]+/g) ?? []) {\n    counts[word] = (counts[word] ?? 0) + 1\n  }\n  return counts\n}",
+    "python": "import re\n\ndef word_frequency(text):\n    counts = {}\n    for word in re.findall(r\"[a-z]+\", text.lower()):\n        counts[word] = counts.get(word, 0) + 1\n    return counts"
+  }
+}

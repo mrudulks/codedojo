@@ -1,0 +1,21 @@
+{
+  "id": "predict-ts-this",
+  "mode": "predict",
+  "languages": [
+    "typescript"
+  ],
+  "difficulty": 3,
+  "tags": [
+    "this",
+    "classes"
+  ],
+  "title": "Arrow functions and this",
+  "prompt": "Type exactly what this program prints. It type checks; the question is what happens at run time.",
+  "code": {
+    "typescript": "class Counter {\n  count = 0\n  name = 'counter'\n  incArrow = () => {\n    this.count++\n  }\n  incMethod() {\n    this.count++\n  }\n}\n\nconst c = new Counter()\nconst { incArrow } = c\nincArrow()\nincArrow()\nc.incMethod()\nconst label = { name: 'label', describe() { return this.name } }\nconst other = { name: 'other', describe: label.describe }\nconsole.log(c.count)\nconsole.log(label.describe(), other.describe())\nconsole.log([c.name].map(function (n) { return n.length }))"
+  },
+  "hints": [
+    "Arrow class fields capture the instance when it is constructed.",
+    "A regular method's `this` is whatever object is before the dot when it is called."
+  ]
+}
