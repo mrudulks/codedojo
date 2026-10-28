@@ -22,14 +22,23 @@ export function formatValue(value: unknown): string {
   }
 }
 
-/** Splits prose on `backticks` into text and inline-code parts (rendered without v-html). */
-export function splitInlineCode(text: string): { code: boolean; text: string }[] {
+export interface RichPart {
+  kind: 'text' | 'code' | 'bold'
+  text: string
+}
+
+/** Splits prose on `backticks` and **stars** into parts (rendered without v-html). */
+export function splitRichText(text: string): RichPart[] {
   return text
-    .split(/(`[^`]+`)/)
+    .split(/(`[^`]+`|\*\*[^*]+\*\*)/)
     .filter(Boolean)
-    .map((part) =>
-      part.startsWith('`') && part.endsWith('`') && part.length > 1
-        ? { code: true, text: part.slice(1, -1) }
-        : { code: false, text: part },
-    )
+    .map((part): RichPart => {
+      if (part.length > 2 && part.startsWith('`') && part.endsWith('`')) {
+        return { kind: 'code', text: part.slice(1, -1) }
+      }
+      if (part.length > 4 && part.startsWith('**') && part.endsWith('**')) {
+        return { kind: 'bold', text: part.slice(2, -2) }
+      }
+      return { kind: 'text', text: part }
+    })
 }

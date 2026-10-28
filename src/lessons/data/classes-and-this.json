@@ -1,0 +1,82 @@
+{
+  "id": "classes-and-this",
+  "group": "language",
+  "order": 2,
+  "title": "Classes and this",
+  "summary": "Bundle data with the functions that use it, keep fields private, and know what this (or self) points to.",
+  "tags": [
+    "classes",
+    "this"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "A class is a blueprint",
+      "body": [
+        "A class describes what each object will hold and what it can do. The constructor (`__init__` in Python) sets up a new object; methods are functions that work on it.",
+        "Inside, `this` (JavaScript) or `self` (Python) means \"the object this method was called on\"."
+      ],
+      "example": {
+        "javascript": {
+          "code": "class Counter {\n  constructor(start) {\n    this.value = start\n  }\n\n  increment() {\n    this.value += 1\n    return this.value\n  }\n}\nconst counter = new Counter(5)\ncounter.increment()\nconsole.log(counter.value)",
+          "output": "6"
+        },
+        "typescript": {
+          "code": "class Counter {\n  value: number\n\n  constructor(start: number) {\n    this.value = start\n  }\n\n  increment(): number {\n    this.value += 1\n    return this.value\n  }\n}\nconst counter = new Counter(5)\ncounter.increment()\nconsole.log(counter.value)",
+          "output": "6"
+        },
+        "python": {
+          "code": "class Counter:\n    def __init__(self, start):\n        self.value = start\n\n    def increment(self):\n        self.value += 1\n        return self.value\n\ncounter = Counter(5)\ncounter.increment()\nprint(counter.value)",
+          "output": "6"
+        }
+      }
+    },
+    {
+      "heading": "Private fields and getters",
+      "body": [
+        "Fields starting with `#` in JavaScript cannot be touched from outside the class. Python has no true private fields; a leading underscore means \"please do not use this from outside\".",
+        "A getter (`get total()`, or `@property` in Python) is read like a field but runs code."
+      ],
+      "example": {
+        "javascript": {
+          "code": "class Wallet {\n  #coins = 0\n\n  add(n) {\n    this.#coins += n\n  }\n\n  get total() {\n    return this.#coins\n  }\n}\nconst wallet = new Wallet()\nwallet.add(3)\nconsole.log(wallet.total)",
+          "output": "3"
+        },
+        "typescript": {
+          "code": "class Wallet {\n  #coins = 0\n\n  add(n: number): void {\n    this.#coins += n\n  }\n\n  get total(): number {\n    return this.#coins\n  }\n}\nconst wallet = new Wallet()\nwallet.add(3)\nconsole.log(wallet.total)",
+          "output": "3"
+        },
+        "python": {
+          "code": "class Wallet:\n    def __init__(self):\n        self._coins = 0\n\n    def add(self, n):\n        self._coins += n\n\n    @property\n    def total(self):\n        return self._coins\n\nwallet = Wallet()\nwallet.add(3)\nprint(wallet.total)",
+          "output": "3"
+        }
+      }
+    },
+    {
+      "heading": "this depends on how you call it",
+      "body": [
+        "In JavaScript, `this` is decided at the moment of the call: `obj.method()` sets `this` to `obj`. Take the method out on its own and call it, and `this` is `undefined`.",
+        "Arrow functions do not have their own `this`; they keep the one from where they were written. That is why arrow functions are safe to pass around as callbacks."
+      ],
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "example": {
+        "javascript": {
+          "code": "class Greeter {\n  name = 'Ada'\n\n  hello() {\n    return this === undefined ? 'this is undefined' : `hi ${this.name}`\n  }\n\n  helloArrow = () => `hi ${this.name}`\n}\nconst greeter = new Greeter()\nconst loose = greeter.hello\nconst looseArrow = greeter.helloArrow\nconsole.log(greeter.hello())\nconsole.log(loose())\nconsole.log(looseArrow())",
+          "output": "hi Ada\nthis is undefined\nhi Ada"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Forgetting `new` when creating an object in JavaScript.",
+    "Forgetting `self` as the first parameter of a Python method, or forgetting `self.` when using a field.",
+    "Passing `obj.method` as a callback and losing `this`. Use an arrow function: `() => obj.method()`."
+  ]
+}

@@ -5,7 +5,7 @@ import { loadBundledTasks } from '../tasks/loader'
 import { MODES, type Mode, type Task } from '../tasks/schema'
 import { filterTasks, type TaskFilters } from '../tasks/filter'
 
-export type View = 'home' | 'task'
+export type View = 'home' | 'task' | 'learn'
 
 export const useTasksStore = defineStore('tasks', () => {
   const { tasks: all, errors } = loadBundledTasks()

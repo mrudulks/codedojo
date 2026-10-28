@@ -1,0 +1,87 @@
+{
+  "id": "functional",
+  "group": "patterns",
+  "order": 2,
+  "title": "map, filter and reduce",
+  "summary": "Transform every item, keep some items, or combine them all into one value, without writing the loop yourself.",
+  "tags": [
+    "functional"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "map: change every item",
+      "body": [
+        "`map` runs a function on each item and gives you a new list of the results. Python usually writes this as a list comprehension."
+      ],
+      "example": {
+        "javascript": {
+          "code": "console.log([1, 2, 3].map((n) => n * 10))",
+          "output": "[ 10, 20, 30 ]"
+        },
+        "python": {
+          "code": "print([n * 10 for n in [1, 2, 3]])",
+          "output": "[10, 20, 30]"
+        }
+      }
+    },
+    {
+      "heading": "filter: keep some items",
+      "body": [
+        "`filter` keeps only the items where your function returns true."
+      ],
+      "example": {
+        "javascript": {
+          "code": "console.log([1, 2, 3, 4].filter((n) => n % 2 === 0))",
+          "output": "[ 2, 4 ]"
+        },
+        "python": {
+          "code": "print([n for n in [1, 2, 3, 4] if n % 2 == 0])",
+          "output": "[2, 4]"
+        }
+      }
+    },
+    {
+      "heading": "reduce: combine into one value",
+      "body": [
+        "`reduce` carries a running value through the list, like a total. Always give it a starting value (here `0`).",
+        "For plain sums Python has `sum`, which is easier to read."
+      ],
+      "example": {
+        "javascript": {
+          "code": "console.log([1, 2, 3, 4].reduce((total, n) => total + n, 0))",
+          "output": "10"
+        },
+        "python": {
+          "code": "from functools import reduce\nprint(reduce(lambda total, n: total + n, [1, 2, 3, 4], 0))\nprint(sum([1, 2, 3, 4]))",
+          "output": "10\n10"
+        }
+      }
+    },
+    {
+      "heading": "Chaining them",
+      "body": [
+        "Each step returns a new list, so you can line them up: keep the paid orders, take their prices, add them up. Read it top to bottom like a recipe."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const orders = [\n  { item: 'tea', price: 3, paid: true },\n  { item: 'cake', price: 5, paid: false },\n  { item: 'pie', price: 4, paid: true },\n]\nconst paidTotal = orders\n  .filter((o) => o.paid)\n  .map((o) => o.price)\n  .reduce((sum, p) => sum + p, 0)\nconsole.log(paidTotal)",
+          "output": "7"
+        },
+        "python": {
+          "code": "orders = [\n    {'item': 'tea', 'price': 3, 'paid': True},\n    {'item': 'cake', 'price': 5, 'paid': False},\n    {'item': 'pie', 'price': 4, 'paid': True},\n]\npaid_total = sum(o['price'] for o in orders if o['paid'])\nprint(paid_total)",
+          "output": "7"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Leaving out the starting value of `reduce`: it then fails on an empty list.",
+    "Using `map` just to loop when you do not need the new list. Use `for` (or `forEach`) for that.",
+    "Arrow functions with braces need `return`, or every result is `undefined`."
+  ]
+}

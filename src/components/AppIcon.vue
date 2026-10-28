@@ -15,6 +15,7 @@ export type IconName =
   | 'download'
   | 'upload'
   | 'arrow-right'
+  | 'book'
 
 defineProps<{ name: IconName; size?: number }>()
 
@@ -35,6 +36,7 @@ const PATHS: Record<IconName, string> = {
   download: 'M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14',
   upload: 'M12 20V9m0 0-4.5 4.5M12 9l4.5 4.5M5 4h14',
   'arrow-right': 'M5 12h14m-5-5 5 5-5 5',
+  book: 'M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z',
 }
 </script>
 

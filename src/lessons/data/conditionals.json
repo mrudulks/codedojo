@@ -1,0 +1,80 @@
+{
+  "id": "conditionals",
+  "group": "basics",
+  "order": 4,
+  "title": "Making decisions",
+  "summary": "if / else chains, returning early, replacing long chains with a table, and what counts as true.",
+  "tags": [
+    "conditionals"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "The first match wins",
+      "body": [
+        "Conditions are checked from top to bottom and the first one that is true runs. Put the most specific check first.",
+        "Returning as soon as you know the answer keeps the code flat: no `else` needed after a `return`."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function sizeOf(n) {\n  if (n >= 100) return 'large'\n  if (n >= 10) return 'medium'\n  return 'small'\n}\nconsole.log(sizeOf(150), sizeOf(42), sizeOf(3))",
+          "output": "large medium small"
+        },
+        "typescript": {
+          "code": "function sizeOf(n: number): string {\n  if (n >= 100) return 'large'\n  if (n >= 10) return 'medium'\n  return 'small'\n}\nconsole.log(sizeOf(150), sizeOf(42), sizeOf(3))",
+          "output": "large medium small"
+        },
+        "python": {
+          "code": "def size_of(n):\n    if n >= 100:\n        return 'large'\n    if n >= 10:\n        return 'medium'\n    return 'small'\n\nprint(size_of(150), size_of(42), size_of(3))",
+          "output": "large medium small"
+        }
+      }
+    },
+    {
+      "heading": "A table instead of a long chain",
+      "body": [
+        "When every branch has the same shape, put the cases in a list and loop over it. Adding a case is then one new line of data."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const levels = [\n  [100, 'large'],\n  [10, 'medium'],\n]\nfunction sizeOf(n) {\n  for (const [min, label] of levels) {\n    if (n >= min) return label\n  }\n  return 'small'\n}\nconsole.log(sizeOf(42))",
+          "output": "medium"
+        },
+        "typescript": {
+          "code": "const levels: [number, string][] = [\n  [100, 'large'],\n  [10, 'medium'],\n]\nfunction sizeOf(n: number): string {\n  for (const [min, label] of levels) {\n    if (n >= min) return label\n  }\n  return 'small'\n}\nconsole.log(sizeOf(42))",
+          "output": "medium"
+        },
+        "python": {
+          "code": "levels = [(100, 'large'), (10, 'medium')]\n\ndef size_of(n):\n    for minimum, label in levels:\n        if n >= minimum:\n            return label\n    return 'small'\n\nprint(size_of(42))",
+          "output": "medium"
+        }
+      }
+    },
+    {
+      "heading": "What counts as true",
+      "body": [
+        "An `if` accepts any value, not only `true` and `false`. Empty-ish values count as false.",
+        "One big difference: an empty list is true in JavaScript but false in Python. To check for \"empty\" in JavaScript, use `list.length === 0`."
+      ],
+      "example": {
+        "javascript": {
+          "code": "console.log(Boolean(0), Boolean(''), Boolean([]))",
+          "output": "false false true"
+        },
+        "python": {
+          "code": "print(bool(0), bool(''), bool([]))",
+          "output": "False False False"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Writing `=` (assign) where you meant `===` or `==` (compare).",
+    "Putting a broad check like `n >= 10` before a narrower one like `n >= 100`, so the narrow one never runs.",
+    "In Python it is `elif`, not `else if`."
+  ]
+}

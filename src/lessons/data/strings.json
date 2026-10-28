@@ -1,0 +1,91 @@
+{
+  "id": "strings",
+  "group": "basics",
+  "order": 2,
+  "title": "Working with text",
+  "summary": "Strings are rows of characters: read them by position, change case, split them into words and join them back.",
+  "tags": [
+    "strings"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "A row of characters",
+      "body": [
+        "A string works a lot like an array of characters: it has a length, and you can read one character by its index."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const word = 'hello'\nconsole.log(word.length)\nconsole.log(word[1])\nconsole.log(word.toUpperCase())",
+          "output": "5\ne\nHELLO"
+        },
+        "python": {
+          "code": "word = 'hello'\nprint(len(word))\nprint(word[1])\nprint(word.upper())",
+          "output": "5\ne\nHELLO"
+        }
+      }
+    },
+    {
+      "heading": "Strings never change",
+      "body": [
+        "Methods like `toUpperCase` or `upper` do not change the string. They give you a new one, so you have to keep the result."
+      ],
+      "example": {
+        "javascript": {
+          "code": "let name = 'ada'\nname.toUpperCase()\nconsole.log(name)\nname = name.toUpperCase()\nconsole.log(name)",
+          "output": "ada\nADA"
+        },
+        "python": {
+          "code": "name = 'ada'\nname.upper()\nprint(name)\nname = name.upper()\nprint(name)",
+          "output": "ada\nADA"
+        }
+      }
+    },
+    {
+      "heading": "Split into words, join them back",
+      "body": [
+        "`split` cuts a string into a list of pieces; `join` glues a list back into one string.",
+        "Watch the spaces. In JavaScript, `split(' ')` turns two spaces in a row into an empty word. `trim()` and `split(/\\s+/)` handle that. Python's `split()` with no argument already does."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const line = ' red  green blue'\nconsole.log(line.split(' '))\nconst words = line.trim().split(/\\s+/)\nconsole.log(words)\nconsole.log(words.join('-'))",
+          "output": "[ '', 'red', '', 'green', 'blue' ]\n[ 'red', 'green', 'blue' ]\nred-green-blue"
+        },
+        "python": {
+          "code": "line = ' red  green blue'\nprint(line.split(' '))\nwords = line.split()\nprint(words)\nprint('-'.join(words))",
+          "output": "['', 'red', '', 'green', 'blue']\n['red', 'green', 'blue']\nred-green-blue"
+        }
+      }
+    },
+    {
+      "heading": "Checking what a character is",
+      "body": [
+        "To keep only letters or digits, test each character. A regular expression works in both languages; Python also has handy methods like `isalpha` and `isalnum`."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const isLetter = (ch) => /[a-z]/i.test(ch)\nconsole.log(isLetter('q'), isLetter('7'))",
+          "output": "true false"
+        },
+        "typescript": {
+          "code": "const isLetter = (ch: string): boolean => /[a-z]/i.test(ch)\nconsole.log(isLetter('q'), isLetter('7'))",
+          "output": "true false"
+        },
+        "python": {
+          "code": "print('q'.isalpha(), '7'.isalpha())\nprint('7'.isalnum())",
+          "output": "True False\nTrue"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Comparing before lowercasing: `'A'` and `'a'` are different characters.",
+    "Calling a method and forgetting to keep its result.",
+    "Splitting on a single space when the text can contain several."
+  ]
+}

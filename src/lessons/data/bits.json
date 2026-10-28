@@ -1,0 +1,96 @@
+{
+  "id": "bits",
+  "group": "advanced",
+  "order": 9,
+  "title": "Bit manipulation",
+  "summary": "Treat a number as a row of 1s and 0s, and use AND, OR, XOR and shifts for compact flags and a few clever tricks.",
+  "tags": [
+    "bits"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "Numbers are rows of bits",
+      "body": [
+        "Every whole number is stored in binary. 13 is `1101`: 8 + 4 + 0 + 1. Each position is worth double the one to its right."
+      ],
+      "example": {
+        "javascript": {
+          "code": "console.log((13).toString(2))\nconsole.log(parseInt('1101', 2))\nconsole.log(0b1101)",
+          "output": "1101\n13\n13"
+        },
+        "python": {
+          "code": "print(bin(13))\nprint(format(13, 'b'))\nprint(int('1101', 2))\nprint(0b1101)",
+          "output": "0b1101\n1101\n13\n13"
+        }
+      }
+    },
+    {
+      "heading": "AND, OR, XOR and shifts",
+      "body": [
+        "These operators work on every bit position separately:",
+        "- `a & b` (AND): 1 where **both** have a 1.",
+        "- `a | b` (OR): 1 where **either** has a 1.",
+        "- `a ^ b` (XOR): 1 where they **differ**.",
+        "- `a << n` shifts left, multiplying by 2ⁿ; `a >> n` shifts right, dividing by 2ⁿ and rounding down."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const a = 0b1100\nconst b = 0b1010\nconsole.log(a & b, a | b, a ^ b)\nconsole.log(1 << 3, 20 >> 2)",
+          "output": "8 14 6\n8 5"
+        },
+        "python": {
+          "code": "a = 0b1100\nb = 0b1010\nprint(a & b, a | b, a ^ b)\nprint(1 << 3, 20 >> 2)",
+          "output": "8 14 6\n8 5"
+        }
+      }
+    },
+    {
+      "heading": "Flags packed into one number",
+      "body": [
+        "Each bit can be an on/off switch. Give each option its own bit, turn it on with `|`, test it with `&`, and turn it off with `& ~`.",
+        "In JavaScript, always put brackets around the `&` part: `===` and `!==` are applied first, so `perms & WRITE !== 0` means `perms & (WRITE !== 0)`. The last JavaScript line below shows the wrong answer that gives. Python applies `&` first, so it does not have this trap."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const READ = 1\nconst WRITE = 2\nconst DELETE = 4\n\nlet perms = READ | WRITE\nconsole.log((perms & WRITE) !== 0, (perms & DELETE) !== 0)\nperms &= ~WRITE\nconsole.log((perms & WRITE) !== 0, perms)\nconsole.log(perms & WRITE !== 0)",
+          "output": "true false\nfalse 1\n1"
+        },
+        "python": {
+          "code": "READ = 1\nWRITE = 2\nDELETE = 4\n\nperms = READ | WRITE\nprint(perms & WRITE != 0, perms & DELETE != 0)\nperms &= ~WRITE\nprint((perms & WRITE) != 0, perms)",
+          "output": "True False\nFalse 1"
+        }
+      }
+    },
+    {
+      "heading": "Two classic tricks",
+      "body": [
+        "- A power of two has exactly one 1 bit, and subtracting 1 flips everything below it, so `n & (n - 1)` is 0 only for powers of two.",
+        "- `x ^ x` is 0 and `x ^ 0` is `x`. XOR every number in a list where all values come in pairs except one, and the pairs cancel out, leaving the odd one."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const isPowerOfTwo = (n) => n > 0 && (n & (n - 1)) === 0\nconsole.log(isPowerOfTwo(64), isPowerOfTwo(48))\n\nconst nums = [4, 7, 2, 7, 4]\nconsole.log(nums.reduce((acc, n) => acc ^ n, 0))",
+          "output": "true false\n2"
+        },
+        "typescript": {
+          "code": "const isPowerOfTwo = (n: number): boolean => n > 0 && (n & (n - 1)) === 0\nconsole.log(isPowerOfTwo(64), isPowerOfTwo(48))\n\nconst nums = [4, 7, 2, 7, 4]\nconsole.log(nums.reduce((acc, n) => acc ^ n, 0))",
+          "output": "true false\n2"
+        },
+        "python": {
+          "code": "from functools import reduce\nfrom operator import xor\n\ndef is_power_of_two(n):\n    return n > 0 and (n & (n - 1)) == 0\n\nprint(is_power_of_two(64), is_power_of_two(48))\nprint(reduce(xor, [4, 7, 2, 7, 4], 0))",
+          "output": "True False\n2"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Leaving out brackets in JavaScript: `n & 1 === 0` means `n & (1 === 0)`. Write `(n & 1) === 0`.",
+    "In JavaScript, bitwise operators work on 32-bit integers, so numbers above about 2 billion get mangled.",
+    "Mixing up `&&` (logical and) with `&` (bitwise and)."
+  ]
+}

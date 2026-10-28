@@ -1,0 +1,75 @@
+{
+  "id": "references",
+  "group": "language",
+  "order": 1,
+  "title": "Copies and references",
+  "summary": "Assigning a list or object does not copy it. Learn when two names share one thing, and how to make a real copy.",
+  "tags": [
+    "references"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "Two names, one object",
+      "body": [
+        "Writing `b = a` for a list or object does not copy it. Both names now point at the same thing, so a change through one shows up through the other."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const a = [1, 2]\nconst b = a\nb.push(3)\nconsole.log(a)",
+          "output": "[ 1, 2, 3 ]"
+        },
+        "python": {
+          "code": "a = [1, 2]\nb = a\nb.append(3)\nprint(a)",
+          "output": "[1, 2, 3]"
+        }
+      }
+    },
+    {
+      "heading": "Functions receive the same object",
+      "body": [
+        "Passing a list to a function hands over the same list, not a copy. If the function changes it, the caller sees the change."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function addItem(list) {\n  list.push('new')\n}\nconst mine = []\naddItem(mine)\nconsole.log(mine)",
+          "output": "[ 'new' ]"
+        },
+        "typescript": {
+          "code": "function addItem(list: string[]): void {\n  list.push('new')\n}\nconst mine: string[] = []\naddItem(mine)\nconsole.log(mine)",
+          "output": "[ 'new' ]"
+        },
+        "python": {
+          "code": "def add_item(items):\n    items.append('new')\n\nmine = []\nadd_item(mine)\nprint(mine)",
+          "output": "['new']"
+        }
+      }
+    },
+    {
+      "heading": "Shallow and deep copies",
+      "body": [
+        "Spreading (`{ ...obj }`, `[...arr]`) or `.copy()` makes a new outer object, but anything nested inside is still shared. That is a shallow copy.",
+        "To copy all the way down, use `structuredClone` in JavaScript or `copy.deepcopy` in Python."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const original = { name: 'Ada', tags: ['math'] }\nconst shallow = { ...original }\nshallow.name = 'Bo'\nshallow.tags.push('code')\nconsole.log(original)\n\nconst deep = structuredClone(original)\ndeep.tags.push('art')\nconsole.log(original.tags)",
+          "output": "{ name: 'Ada', tags: [ 'math', 'code' ] }\n[ 'math', 'code' ]"
+        },
+        "python": {
+          "code": "import copy\n\noriginal = {'name': 'Ada', 'tags': ['math']}\nshallow = original.copy()\nshallow['name'] = 'Bo'\nshallow['tags'].append('code')\nprint(original)\n\ndeep = copy.deepcopy(original)\ndeep['tags'].append('art')\nprint(original['tags'])",
+          "output": "{'name': 'Ada', 'tags': ['math', 'code']}\n['math', 'code']"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "`const` stops you reassigning the name, not changing the object it points to.",
+    "Changing the input list inside a solution when the task expects a new list.",
+    "Expecting a spread copy to protect nested arrays or objects."
+  ]
+}

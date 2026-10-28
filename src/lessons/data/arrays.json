@@ -1,0 +1,97 @@
+{
+  "id": "arrays",
+  "group": "basics",
+  "order": 1,
+  "title": "Arrays and lists",
+  "summary": "An ordered row of values you can read by position, grow, and loop over.",
+  "tags": [
+    "arrays"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "A numbered row of values",
+      "body": [
+        "An array (a list in Python) keeps values in order. Each one has a position called an index, and counting starts at 0, not 1.",
+        "So the last item is at `length - 1`. Python also lets you count from the end with `-1`."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const fruits = ['apple', 'banana', 'cherry']\nconsole.log(fruits[0])\nconsole.log(fruits.length)\nconsole.log(fruits[fruits.length - 1])",
+          "output": "apple\n3\ncherry"
+        },
+        "typescript": {
+          "code": "const fruits: string[] = ['apple', 'banana', 'cherry']\nconsole.log(fruits[0])\nconsole.log(fruits.length)\nconsole.log(fruits[fruits.length - 1])",
+          "output": "apple\n3\ncherry"
+        },
+        "python": {
+          "code": "fruits = ['apple', 'banana', 'cherry']\nprint(fruits[0])\nprint(len(fruits))\nprint(fruits[-1])",
+          "output": "apple\n3\ncherry"
+        }
+      }
+    },
+    {
+      "heading": "Building a new list in a loop",
+      "body": [
+        "A very common shape: start with an empty list, loop over the input, and add one result each time.",
+        "This leaves the input untouched, which is usually what tests expect."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const nums = [3, 1, 4]\nconst doubled = []\nfor (const n of nums) {\n  doubled.push(n * 2)\n}\nconsole.log(doubled)",
+          "output": "[ 6, 2, 8 ]"
+        },
+        "typescript": {
+          "code": "const nums = [3, 1, 4]\nconst doubled: number[] = []\nfor (const n of nums) {\n  doubled.push(n * 2)\n}\nconsole.log(doubled)",
+          "output": "[ 6, 2, 8 ]"
+        },
+        "python": {
+          "code": "nums = [3, 1, 4]\ndoubled = []\nfor n in nums:\n    doubled.append(n * 2)\nprint(doubled)",
+          "output": "[6, 2, 8]"
+        }
+      }
+    },
+    {
+      "heading": "When you need the position too",
+      "body": [
+        "Sometimes the index matters, for example \"return the positions of...\". Use a counting loop in JavaScript, or `enumerate` in Python, which gives you the index and the value together."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const scores = [10, 20, 30]\nfor (let i = 0; i < scores.length; i++) {\n  console.log(i, scores[i])\n}",
+          "output": "0 10\n1 20\n2 30"
+        },
+        "python": {
+          "code": "scores = [10, 20, 30]\nfor i, score in enumerate(scores):\n    print(i, score)",
+          "output": "0 10\n1 20\n2 30"
+        }
+      }
+    },
+    {
+      "heading": "Carrying a value through the loop",
+      "body": [
+        "Keep a variable outside the loop and update it on every step: a count, a total, the biggest value so far.",
+        "Think about where it starts. Starting a \"largest\" at `0` breaks when every number is negative; start from the first item instead."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const nums = [4, 7, 2, 9, 6]\nlet evens = 0\nfor (const n of nums) {\n  if (n % 2 === 0) evens++\n}\nconsole.log(evens)",
+          "output": "3"
+        },
+        "python": {
+          "code": "nums = [4, 7, 2, 9, 6]\nevens = 0\nfor n in nums:\n    if n % 2 == 0:\n        evens += 1\nprint(evens)",
+          "output": "3"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Looping with `i <= arr.length` goes one step too far. Use `<`.",
+    "Reading past the end gives `undefined` in JavaScript but raises `IndexError` in Python.",
+    "Adding or removing items from a list while you loop over it skips items. Build a new list instead."
+  ]
+}

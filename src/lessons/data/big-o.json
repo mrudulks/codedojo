@@ -1,0 +1,80 @@
+{
+  "id": "big-o",
+  "group": "advanced",
+  "order": 1,
+  "title": "Big O: how work grows",
+  "summary": "A way to describe how much slower code gets as the input grows, so you can tell a fast idea from a slow one before you run it.",
+  "tags": [
+    "complexity"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "Count steps, not seconds",
+      "body": [
+        "Timing code depends on the computer. Instead, count roughly how many steps it takes for an input of size `n`, and watch what happens when `n` grows.",
+        "One loop over the input takes about `n` steps: O(n). A loop inside a loop takes about `n × n`: O(n²). Ten times more input means ten times more work for the first, and a hundred times more for the second."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function countSteps(n) {\n  let single = 0\n  for (let i = 0; i < n; i++) single++\n  let nested = 0\n  for (let i = 0; i < n; i++) {\n    for (let j = 0; j < n; j++) nested++\n  }\n  return [single, nested]\n}\nfor (const n of [10, 100, 1000]) console.log(n, countSteps(n))",
+          "output": "10 [ 10, 100 ]\n100 [ 100, 10000 ]\n1000 [ 1000, 1000000 ]"
+        },
+        "typescript": {
+          "code": "function countSteps(n: number): [number, number] {\n  let single = 0\n  for (let i = 0; i < n; i++) single++\n  let nested = 0\n  for (let i = 0; i < n; i++) {\n    for (let j = 0; j < n; j++) nested++\n  }\n  return [single, nested]\n}\nfor (const n of [10, 100, 1000]) console.log(n, countSteps(n))",
+          "output": "10 [ 10, 100 ]\n100 [ 100, 10000 ]\n1000 [ 1000, 1000000 ]"
+        },
+        "python": {
+          "code": "def count_steps(n):\n    single = 0\n    for i in range(n):\n        single += 1\n    nested = 0\n    for i in range(n):\n        for j in range(n):\n            nested += 1\n    return [single, nested]\n\nfor n in [10, 100, 1000]:\n    print(n, count_steps(n))",
+          "output": "10 [10, 100]\n100 [100, 10000]\n1000 [1000, 1000000]"
+        }
+      }
+    },
+    {
+      "heading": "The common shapes, fastest first",
+      "body": [
+        "- **O(1)**: the same work whatever the size. Reading `arr[5]`, looking up a key in a map.",
+        "- **O(log n)**: halve the problem each step. Binary search.",
+        "- **O(n)**: touch each item once. One loop.",
+        "- **O(n log n)**: good sorting algorithms. Usually what `sort` costs.",
+        "- **O(n²)**: compare every item with every other. A loop inside a loop.",
+        "- **O(2ⁿ)**: try every combination. Fine for 20 items, hopeless for 60."
+      ]
+    },
+    {
+      "heading": "Why halving is so powerful",
+      "body": [
+        "Halving a million over and over reaches 1 in under 20 steps. That is why binary search and balanced trees stay fast on huge inputs."
+      ],
+      "example": {
+        "javascript": {
+          "code": "let n = 1000000\nlet steps = 0\nwhile (n > 1) {\n  n = Math.floor(n / 2)\n  steps++\n}\nconsole.log(steps)",
+          "output": "19"
+        },
+        "python": {
+          "code": "n = 1000000\nsteps = 0\nwhile n > 1:\n    n //= 2\n    steps += 1\nprint(steps)",
+          "output": "19"
+        }
+      }
+    },
+    {
+      "heading": "Hidden loops",
+      "body": [
+        "Some one-word operations are loops in disguise. Put one inside your own loop and an O(n) idea quietly becomes O(n²):",
+        "- `includes`, `indexOf`, `x in some_list`: check every item.",
+        "- `slice`, spreading `[...arr]`, `list(...)`: copy every item.",
+        "- `shift`/`unshift` in JavaScript, `pop(0)`/`insert(0, x)` in Python: move every item.",
+        "The usual fix is a set or map for lookups, and a pointer or index instead of removing from the front."
+      ]
+    }
+  ],
+  "mistakes": [
+    "Thinking a short line is a cheap line. `arr.includes(x)` is a whole loop.",
+    "Worrying about small constant factors before fixing an O(n²) that should be O(n).",
+    "Forgetting that recursion without memoization can be exponential."
+  ]
+}

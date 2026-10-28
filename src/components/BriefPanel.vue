@@ -4,6 +4,7 @@ import { LANGUAGE_LABELS, type Language } from '../languages'
 import { MODE_LABELS, type Task } from '../tasks/schema'
 import AppIcon from './AppIcon.vue'
 import DifficultyDots from './DifficultyDots.vue'
+import LessonLinks from './LessonLinks.vue'
 import RichText from './RichText.vue'
 
 const props = defineProps<{
@@ -29,6 +30,7 @@ const hints = computed(() => props.task.hints ?? [])
       <DifficultyDots :value="task.difficulty" />
       <span v-for="tag in task.tags" :key="tag" class="tag">{{ tag }}</span>
     </div>
+    <LessonLinks :tags="task.tags" />
     <p class="prompt"><RichText :text="task.prompt" /></p>
     <slot />
     <div v-if="hints.length > 0" class="hints">

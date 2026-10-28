@@ -1,0 +1,79 @@
+{
+  "id": "objects",
+  "group": "basics",
+  "order": 3,
+  "title": "Objects and dictionaries",
+  "summary": "Store values under names (keys), look them up, count with them, and loop over them.",
+  "tags": [
+    "objects"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "Values stored under names",
+      "body": [
+        "An object (a dict in Python) maps keys to values. Instead of a position, you use a name to read or change a value."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const person = { name: 'Ada', age: 36 }\nconsole.log(person.name)\nperson.age = 37\nconsole.log(person)",
+          "output": "Ada\n{ name: 'Ada', age: 37 }"
+        },
+        "typescript": {
+          "code": "const person: { name: string; age: number } = { name: 'Ada', age: 36 }\nconsole.log(person.name)\nperson.age = 37\nconsole.log(person)",
+          "output": "Ada\n{ name: 'Ada', age: 37 }"
+        },
+        "python": {
+          "code": "person = {'name': 'Ada', 'age': 36}\nprint(person['name'])\nperson['age'] = 37\nprint(person)",
+          "output": "Ada\n{'name': 'Ada', 'age': 37}"
+        }
+      }
+    },
+    {
+      "heading": "Counting things",
+      "body": [
+        "To count, use the thing as the key. If the key is not there yet, start from 0.",
+        "When the key is in a variable, use square brackets: `counts[ch]`. Writing `counts.ch` would look for a key literally called \"ch\"."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const counts = {}\nfor (const ch of 'banana') {\n  counts[ch] = (counts[ch] ?? 0) + 1\n}\nconsole.log(counts)",
+          "output": "{ b: 1, a: 3, n: 2 }"
+        },
+        "typescript": {
+          "code": "const counts: Record<string, number> = {}\nfor (const ch of 'banana') {\n  counts[ch] = (counts[ch] ?? 0) + 1\n}\nconsole.log(counts)",
+          "output": "{ b: 1, a: 3, n: 2 }"
+        },
+        "python": {
+          "code": "counts = {}\nfor ch in 'banana':\n    counts[ch] = counts.get(ch, 0) + 1\nprint(counts)",
+          "output": "{'b': 1, 'a': 3, 'n': 2}"
+        }
+      }
+    },
+    {
+      "heading": "Looping over keys and values",
+      "body": [
+        "`Object.entries` in JavaScript and `.items()` in Python give you each key with its value."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const prices = { tea: 3, cake: 5 }\nfor (const [item, price] of Object.entries(prices)) {\n  console.log(item, price)\n}",
+          "output": "tea 3\ncake 5"
+        },
+        "python": {
+          "code": "prices = {'tea': 3, 'cake': 5}\nfor item, price in prices.items():\n    print(item, price)",
+          "output": "tea 3\ncake 5"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Using `obj.key` when the key is stored in a variable. Use `obj[key]`.",
+    "In Python, reading a missing key with `d[key]` raises `KeyError`. Use `d.get(key, default)`.",
+    "`if (counts[k])` is false when the count is 0. Check `k in counts` instead."
+  ]
+}

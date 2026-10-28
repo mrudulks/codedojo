@@ -1,0 +1,62 @@
+{
+  "id": "stacks",
+  "group": "patterns",
+  "order": 5,
+  "title": "Stacks",
+  "summary": "Last in, first out: the right tool for undo, nesting and matching pairs.",
+  "tags": [
+    "stack"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "Last in, first out",
+      "body": [
+        "A stack is a pile: you add to the top and take from the top. A plain array or list is all you need: `push`/`append` to add, `pop` to take the newest item."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const stack = []\nstack.push('a')\nstack.push('b')\nstack.push('c')\nconsole.log(stack.pop())\nconsole.log(stack)",
+          "output": "c\n[ 'a', 'b' ]"
+        },
+        "typescript": {
+          "code": "const stack: string[] = []\nstack.push('a')\nstack.push('b')\nstack.push('c')\nconsole.log(stack.pop())\nconsole.log(stack)",
+          "output": "c\n[ 'a', 'b' ]"
+        },
+        "python": {
+          "code": "stack = []\nstack.append('a')\nstack.append('b')\nstack.append('c')\nprint(stack.pop())\nprint(stack)",
+          "output": "c\n['a', 'b']"
+        }
+      }
+    },
+    {
+      "heading": "Undo, and anything that nests",
+      "body": [
+        "Undo removes the most recent action, which is exactly what `pop` does.",
+        "Nesting works the same way. When something opens (a bracket, a tag), push it. When something closes, pop and check it matches. At the end, the stack should be empty."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const history = []\nfor (const action of ['type a', 'type b', 'undo', 'type c']) {\n  if (action === 'undo') history.pop()\n  else history.push(action)\n}\nconsole.log(history)",
+          "output": "[ 'type a', 'type c' ]"
+        },
+        "typescript": {
+          "code": "const history: string[] = []\nfor (const action of ['type a', 'type b', 'undo', 'type c']) {\n  if (action === 'undo') history.pop()\n  else history.push(action)\n}\nconsole.log(history)",
+          "output": "[ 'type a', 'type c' ]"
+        },
+        "python": {
+          "code": "history = []\nfor action in ['type a', 'type b', 'undo', 'type c']:\n    if action == 'undo':\n        history.pop()\n    else:\n        history.append(action)\nprint(history)",
+          "output": "['type a', 'type c']"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Popping an empty stack: JavaScript gives `undefined`, Python raises `IndexError`. Check the length first.",
+    "Forgetting to check that the stack is empty at the end (something was opened but never closed)."
+  ]
+}

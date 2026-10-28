@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useLessonsStore } from '../stores/lessons'
 import { useSettingsStore, type ThemeChoice } from '../stores/settings'
 import { useTasksStore } from '../stores/tasks'
 import AppIcon, { type IconName } from './AppIcon.vue'
@@ -8,6 +9,14 @@ import LanguageSwitcher from './LanguageSwitcher.vue'
 const emit = defineEmits<{ openSettings: []; toggleSidebar: [] }>()
 const { settings } = useSettingsStore()
 const tasks = useTasksStore()
+const lessons = useLessonsStore()
+
+/** Languages the current page can show; undefined means all. */
+const availableLanguages = computed(() => {
+  if (tasks.view === 'task') return tasks.selected?.languages
+  if (tasks.view === 'learn') return lessons.selected?.languages
+  return undefined
+})
 
 const NEXT_THEME: Record<ThemeChoice, ThemeChoice> = {
   system: 'light',
@@ -39,12 +48,12 @@ const themeLabel = computed(() => `Theme: ${settings.theme} (click to change)`)
       >
         <AppIcon name="list" /> <span>Practice</span>
       </button>
+      <button type="button" :class="{ active: tasks.view === 'learn' }" @click="lessons.open(null)">
+        <AppIcon name="book" /> <span>Learn</span>
+      </button>
     </nav>
     <div class="spacer"></div>
-    <LanguageSwitcher
-      v-model="settings.language"
-      :available="tasks.view === 'task' ? tasks.selected?.languages : undefined"
-    />
+    <LanguageSwitcher v-model="settings.language" :available="availableLanguages" />
     <button
       class="icon-btn"
       :aria-label="themeLabel"

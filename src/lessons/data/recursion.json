@@ -1,0 +1,85 @@
+{
+  "id": "recursion",
+  "group": "patterns",
+  "order": 4,
+  "title": "Recursion",
+  "summary": "A function that solves a problem by calling itself on a smaller piece, plus how to keep it fast.",
+  "tags": [
+    "recursion"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "A function that calls itself",
+      "body": [
+        "Every recursive function needs two parts:",
+        "- A **base case**: a small input you can answer directly, which stops the calls.",
+        "- A **recursive step**: do a little work, then call yourself on a smaller input."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function countdown(n) {\n  if (n === 0) return ['go']\n  return [n, ...countdown(n - 1)]\n}\nconsole.log(countdown(3))",
+          "output": "[ 3, 2, 1, 'go' ]"
+        },
+        "typescript": {
+          "code": "function countdown(n: number): (number | string)[] {\n  if (n === 0) return ['go']\n  return [n, ...countdown(n - 1)]\n}\nconsole.log(countdown(3))",
+          "output": "[ 3, 2, 1, 'go' ]"
+        },
+        "python": {
+          "code": "def countdown(n):\n    if n == 0:\n        return ['go']\n    return [n] + countdown(n - 1)\n\nprint(countdown(3))",
+          "output": "[3, 2, 1, 'go']"
+        }
+      }
+    },
+    {
+      "heading": "A natural fit for nested data",
+      "body": [
+        "Lists inside lists, any number of levels deep, are hard to handle with plain loops. With recursion: if an item is a list, handle it the same way you handle the whole thing."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function deepSum(items) {\n  let total = 0\n  for (const item of items) {\n    total += Array.isArray(item) ? deepSum(item) : item\n  }\n  return total\n}\nconsole.log(deepSum([1, [2, [3, 4]], 5]))",
+          "output": "15"
+        },
+        "typescript": {
+          "code": "type Nested = number | Nested[]\n\nfunction deepSum(items: Nested[]): number {\n  let total = 0\n  for (const item of items) {\n    total += Array.isArray(item) ? deepSum(item) : item\n  }\n  return total\n}\nconsole.log(deepSum([1, [2, [3, 4]], 5]))",
+          "output": "15"
+        },
+        "python": {
+          "code": "def deep_sum(items):\n    total = 0\n    for item in items:\n        total += deep_sum(item) if isinstance(item, list) else item\n    return total\n\nprint(deep_sum([1, [2, [3, 4]], 5]))",
+          "output": "15"
+        }
+      }
+    },
+    {
+      "heading": "Remember answers you already worked out",
+      "body": [
+        "Some recursive functions ask the same question again and again. `fib(50)` written plainly makes billions of calls.",
+        "Store each answer the first time you compute it (this is called memoization). The second time, look it up."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const memo = new Map()\nfunction fib(n) {\n  if (n < 2) return n\n  if (memo.has(n)) return memo.get(n)\n  const result = fib(n - 1) + fib(n - 2)\n  memo.set(n, result)\n  return result\n}\nconsole.log(fib(50))",
+          "output": "12586269025"
+        },
+        "typescript": {
+          "code": "const memo = new Map<number, number>()\nfunction fib(n: number): number {\n  if (n < 2) return n\n  if (memo.has(n)) return memo.get(n)!\n  const result = fib(n - 1) + fib(n - 2)\n  memo.set(n, result)\n  return result\n}\nconsole.log(fib(50))",
+          "output": "12586269025"
+        },
+        "python": {
+          "code": "memo = {}\n\ndef fib(n):\n    if n < 2:\n        return n\n    if n not in memo:\n        memo[n] = fib(n - 1) + fib(n - 2)\n    return memo[n]\n\nprint(fib(50))",
+          "output": "12586269025"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "No base case, or one that is never reached: you get \"Maximum call stack size exceeded\" or `RecursionError`.",
+    "Calling yourself with an input that is not smaller.",
+    "Forgetting to `return` the result of the recursive call."
+  ]
+}

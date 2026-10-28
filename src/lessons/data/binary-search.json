@@ -1,0 +1,56 @@
+{
+  "id": "binary-search",
+  "group": "patterns",
+  "order": 6,
+  "title": "Searching and binary search",
+  "summary": "Look through items one by one, or, when they are sorted, halve the search each step.",
+  "tags": [
+    "searching"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "One by one",
+      "body": [
+        "The simple way checks each item in turn. Built-ins do this for you: `indexOf` in JavaScript, `.index` in Python. On a long list it can mean checking every single item."
+      ],
+      "example": {
+        "javascript": {
+          "code": "console.log([5, 8, 13].indexOf(8))",
+          "output": "1"
+        },
+        "python": {
+          "code": "print([5, 8, 13].index(8))",
+          "output": "1"
+        }
+      }
+    },
+    {
+      "heading": "Halve it each time",
+      "body": [
+        "Think of guessing a number from 1 to 100 when you are told \"higher\" or \"lower\". Always guess the middle and you need at most 7 guesses.",
+        "Binary search does that on a **sorted** list. Keep `lo` and `hi` around the part still possible, look at the middle, and throw away the half that cannot contain the target."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const items = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]\nlet lo = 0\nlet hi = items.length - 1\nlet steps = 0\nwhile (lo <= hi) {\n  steps++\n  const mid = Math.floor((lo + hi) / 2)\n  if (items[mid] === 23) break\n  if (items[mid] < 23) lo = mid + 1\n  else hi = mid - 1\n}\nconsole.log('found in', steps, 'steps')",
+          "output": "found in 3 steps"
+        },
+        "python": {
+          "code": "items = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]\nlo = 0\nhi = len(items) - 1\nsteps = 0\nwhile lo <= hi:\n    steps += 1\n    mid = (lo + hi) // 2\n    if items[mid] == 23:\n        break\n    if items[mid] < 23:\n        lo = mid + 1\n    else:\n        hi = mid - 1\nprint('found in', steps, 'steps')",
+          "output": "found in 3 steps"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Using binary search on a list that is not sorted.",
+    "Writing `lo < hi` instead of `lo <= hi` and missing the last remaining item.",
+    "In JavaScript, `(lo + hi) / 2` can be a decimal. Wrap it in `Math.floor`.",
+    "Setting `lo = mid` instead of `mid + 1`, which can loop forever."
+  ]
+}

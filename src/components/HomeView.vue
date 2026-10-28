@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import BackupControls from './BackupControls.vue'
 import DashboardPanel from './DashboardPanel.vue'
+import StudyCard from './StudyCard.vue'
 import TodayQueue from './TodayQueue.vue'
 </script>
 
 <template>
   <div class="home">
     <TodayQueue />
+    <StudyCard />
     <DashboardPanel />
     <BackupControls />
   </div>

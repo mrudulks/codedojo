@@ -1,0 +1,72 @@
+{
+  "id": "graphs",
+  "group": "advanced",
+  "order": 5,
+  "title": "Graphs: breadth-first and depth-first search",
+  "summary": "Model things connected to other things, then explore them level by level (shortest paths) or branch by branch (connected areas).",
+  "tags": [
+    "graphs"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "Things and connections",
+      "body": [
+        "A graph is a set of nodes (places, people, pages) joined by edges (roads, friendships, links). The usual way to store one is an adjacency list: for each node, the list of its neighbours.",
+        "Grids are graphs too: each cell is a node, and its neighbours are the cells above, below, left and right."
+      ]
+    },
+    {
+      "heading": "Breadth-first search: nearest first",
+      "body": [
+        "BFS explores in rings: first every node 1 step away, then every node 2 steps away, and so on. So the first time it reaches the goal, it has found the fewest steps.",
+        "It needs a queue (first in, first out) and a `seen` set so no node is visited twice. In JavaScript, `shift()` is fine for small graphs; for big ones keep an index into the array instead."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const graph = {\n  home: ['park', 'shop'],\n  park: ['home', 'lake'],\n  shop: ['home', 'school'],\n  lake: ['park', 'school'],\n  school: ['shop', 'lake'],\n}\n\nfunction stepsBetween(start, goal) {\n  const queue = [[start, 0]]\n  const seen = new Set([start])\n  while (queue.length > 0) {\n    const [node, steps] = queue.shift()\n    if (node === goal) return steps\n    for (const next of graph[node]) {\n      if (!seen.has(next)) {\n        seen.add(next)\n        queue.push([next, steps + 1])\n      }\n    }\n  }\n  return -1\n}\nconsole.log(stepsBetween('home', 'shop'), stepsBetween('home', 'school'))",
+          "output": "1 2"
+        },
+        "typescript": {
+          "code": "const graph: Record<string, string[]> = {\n  home: ['park', 'shop'],\n  park: ['home', 'lake'],\n  shop: ['home', 'school'],\n  lake: ['park', 'school'],\n  school: ['shop', 'lake'],\n}\n\nfunction stepsBetween(start: string, goal: string): number {\n  const queue: [string, number][] = [[start, 0]]\n  const seen = new Set([start])\n  while (queue.length > 0) {\n    const [node, steps] = queue.shift()!\n    if (node === goal) return steps\n    for (const next of graph[node]) {\n      if (!seen.has(next)) {\n        seen.add(next)\n        queue.push([next, steps + 1])\n      }\n    }\n  }\n  return -1\n}\nconsole.log(stepsBetween('home', 'shop'), stepsBetween('home', 'school'))",
+          "output": "1 2"
+        },
+        "python": {
+          "code": "from collections import deque\n\ngraph = {\n    'home': ['park', 'shop'],\n    'park': ['home', 'lake'],\n    'shop': ['home', 'school'],\n    'lake': ['park', 'school'],\n    'school': ['shop', 'lake'],\n}\n\ndef steps_between(start, goal):\n    queue = deque([(start, 0)])\n    seen = {start}\n    while queue:\n        node, steps = queue.popleft()\n        if node == goal:\n            return steps\n        for nxt in graph[node]:\n            if nxt not in seen:\n                seen.add(nxt)\n                queue.append((nxt, steps + 1))\n    return -1\n\nprint(steps_between('home', 'shop'), steps_between('home', 'school'))",
+          "output": "1 2"
+        }
+      }
+    },
+    {
+      "heading": "Depth-first search: follow one path to the end",
+      "body": [
+        "DFS goes as deep as it can before backing up. It does not find shortest paths, but it is the simplest way to visit everything connected to a starting point.",
+        "Counting islands on a map: scan every cell. When you find unvisited land, that is a new island; \"sink\" it by visiting all land connected to it, so it is not counted again."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const map = [\n  '##..#',\n  '#...#',\n  '..#..',\n  '.....',\n]\n\nfunction countIslands(rows) {\n  const seen = new Set()\n  function visit(r, c) {\n    if (r < 0 || c < 0 || r >= rows.length || c >= rows[0].length) return\n    const key = `${r},${c}`\n    if (rows[r][c] !== '#' || seen.has(key)) return\n    seen.add(key)\n    visit(r + 1, c)\n    visit(r - 1, c)\n    visit(r, c + 1)\n    visit(r, c - 1)\n  }\n  let islands = 0\n  for (let r = 0; r < rows.length; r++) {\n    for (let c = 0; c < rows[0].length; c++) {\n      if (rows[r][c] === '#' && !seen.has(`${r},${c}`)) {\n        islands++\n        visit(r, c)\n      }\n    }\n  }\n  return islands\n}\nconsole.log(countIslands(map))",
+          "output": "3"
+        },
+        "typescript": {
+          "code": "const map = [\n  '##..#',\n  '#...#',\n  '..#..',\n  '.....',\n]\n\nfunction countIslands(rows: string[]): number {\n  const seen = new Set<string>()\n  function visit(r: number, c: number): void {\n    if (r < 0 || c < 0 || r >= rows.length || c >= rows[0].length) return\n    const key = `${r},${c}`\n    if (rows[r][c] !== '#' || seen.has(key)) return\n    seen.add(key)\n    visit(r + 1, c)\n    visit(r - 1, c)\n    visit(r, c + 1)\n    visit(r, c - 1)\n  }\n  let islands = 0\n  for (let r = 0; r < rows.length; r++) {\n    for (let c = 0; c < rows[0].length; c++) {\n      if (rows[r][c] === '#' && !seen.has(`${r},${c}`)) {\n        islands++\n        visit(r, c)\n      }\n    }\n  }\n  return islands\n}\nconsole.log(countIslands(map))",
+          "output": "3"
+        },
+        "python": {
+          "code": "world = [\n    '##..#',\n    '#...#',\n    '..#..',\n    '.....',\n]\n\ndef count_islands(rows):\n    seen = set()\n\n    def visit(r, c):\n        if r < 0 or c < 0 or r >= len(rows) or c >= len(rows[0]):\n            return\n        if rows[r][c] != '#' or (r, c) in seen:\n            return\n        seen.add((r, c))\n        visit(r + 1, c)\n        visit(r - 1, c)\n        visit(r, c + 1)\n        visit(r, c - 1)\n\n    islands = 0\n    for r in range(len(rows)):\n        for c in range(len(rows[0])):\n            if rows[r][c] == '#' and (r, c) not in seen:\n                islands += 1\n                visit(r, c)\n    return islands\n\nprint(count_islands(world))",
+          "output": "3"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "No `seen` set: a cycle in the graph makes the search loop forever.",
+    "Marking a node as seen when you take it off the queue instead of when you add it, so it gets queued many times.",
+    "Using DFS when you need the shortest path. Use BFS.",
+    "Checking `rows[r][c]` before checking that `r` and `c` are inside the grid."
+  ]
+}

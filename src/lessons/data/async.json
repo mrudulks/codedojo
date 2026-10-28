@@ -1,0 +1,62 @@
+{
+  "id": "async",
+  "group": "language",
+  "order": 5,
+  "title": "Promises and the event loop",
+  "summary": "Why some JavaScript runs later, in what order, and how async/await reads like normal code.",
+  "tags": [
+    "async"
+  ],
+  "languages": [
+    "javascript",
+    "typescript"
+  ],
+  "sections": [
+    {
+      "heading": "Some code runs later",
+      "body": [
+        "JavaScript runs one thing at a time. `setTimeout` does not pause; it schedules a function for later and carries on. Even with 0 milliseconds, it waits until the current code has finished."
+      ],
+      "example": {
+        "javascript": {
+          "code": "console.log('first')\nsetTimeout(() => console.log('third'), 0)\nconsole.log('second')",
+          "output": "first\nsecond\nthird"
+        }
+      }
+    },
+    {
+      "heading": "Promises go before timers",
+      "body": [
+        "There are two waiting lines. Promise callbacks (`then`, code after `await`) go in a fast line that is emptied as soon as the current code finishes. Timers wait in a slower line after that.",
+        "So the order is: plain code first, then promise callbacks, then timers."
+      ],
+      "example": {
+        "javascript": {
+          "code": "setTimeout(() => console.log('timeout'), 0)\nPromise.resolve().then(() => console.log('promise'))\nconsole.log('sync')",
+          "output": "sync\npromise\ntimeout"
+        }
+      }
+    },
+    {
+      "heading": "async and await",
+      "body": [
+        "`await` pauses only the `async` function it is in, until the promise is done. The code that called that function keeps going straight away."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function wait(ms) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nasync function main() {\n  console.log('start')\n  await wait(10)\n  console.log('done')\n}\n\nmain()\nconsole.log('main returned')",
+          "output": "start\nmain returned\ndone"
+        },
+        "typescript": {
+          "code": "function wait(ms: number): Promise<void> {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nasync function main(): Promise<void> {\n  console.log('start')\n  await wait(10)\n  console.log('done')\n}\n\nmain()\nconsole.log('main returned')",
+          "output": "start\nmain returned\ndone"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Expecting `setTimeout(fn, 0)` to run immediately.",
+    "Forgetting `await`, so you get a pending Promise instead of the value.",
+    "Thinking `await` freezes everything. It only pauses its own function."
+  ]
+}

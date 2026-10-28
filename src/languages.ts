@@ -24,3 +24,11 @@ export const DEFAULT_INDENT: Record<Language, 2 | 4> = {
 export function isLanguage(value: unknown): value is Language {
   return typeof value === 'string' && (LANGUAGES as readonly string[]).includes(value)
 }
+
+/** "JavaScript and TypeScript", "JavaScript, TypeScript and Python". */
+export function languageList(languages: readonly Language[]): string {
+  const labels = languages.map((l) => LANGUAGE_LABELS[l])
+  return labels.length <= 1
+    ? (labels[0] ?? '')
+    : `${labels.slice(0, -1).join(', ')} and ${labels.at(-1)}`
+}

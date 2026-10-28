@@ -1,0 +1,69 @@
+{
+  "id": "sets-and-maps",
+  "group": "patterns",
+  "order": 1,
+  "title": "Remember what you have seen",
+  "summary": "Sets and maps answer \"have I seen this before?\" instantly, turning slow nested loops into one pass.",
+  "tags": [
+    "hashmap"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "The slow way and the fast way",
+      "body": [
+        "Comparing every item with every other item needs a loop inside a loop. With 1,000 items that is about a million comparisons.",
+        "Instead, walk the list once and remember what you have passed. Checking a set or map takes about the same time however big it is."
+      ]
+    },
+    {
+      "heading": "Sets: have I seen this?",
+      "body": [
+        "A set holds each value at most once and answers \"is this in here?\" quickly."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const seen = new Set()\nfor (const n of [4, 2, 4, 7]) {\n  if (seen.has(n)) console.log('repeat:', n)\n  seen.add(n)\n}\nconsole.log(seen.size)",
+          "output": "repeat: 4\n3"
+        },
+        "typescript": {
+          "code": "const seen = new Set<number>()\nfor (const n of [4, 2, 4, 7]) {\n  if (seen.has(n)) console.log('repeat:', n)\n  seen.add(n)\n}\nconsole.log(seen.size)",
+          "output": "repeat: 4\n3"
+        },
+        "python": {
+          "code": "seen = set()\nfor n in [4, 2, 4, 7]:\n    if n in seen:\n        print('repeat:', n)\n    seen.add(n)\nprint(len(seen))",
+          "output": "repeat: 4\n3"
+        }
+      }
+    },
+    {
+      "heading": "Maps: where did I see it?",
+      "body": [
+        "A map (a dict in Python) remembers something about each value, such as the index where you first met it."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const firstIndex = new Map()\nconst letters = ['x', 'y', 'x', 'z']\nletters.forEach((letter, i) => {\n  if (!firstIndex.has(letter)) firstIndex.set(letter, i)\n})\nconsole.log(firstIndex.get('x'), firstIndex.get('z'))",
+          "output": "0 3"
+        },
+        "typescript": {
+          "code": "const firstIndex = new Map<string, number>()\nconst letters = ['x', 'y', 'x', 'z']\nletters.forEach((letter, i) => {\n  if (!firstIndex.has(letter)) firstIndex.set(letter, i)\n})\nconsole.log(firstIndex.get('x'), firstIndex.get('z'))",
+          "output": "0 3"
+        },
+        "python": {
+          "code": "first_index = {}\nletters = ['x', 'y', 'x', 'z']\nfor i, letter in enumerate(letters):\n    if letter not in first_index:\n        first_index[letter] = i\nprint(first_index['x'], first_index['z'])",
+          "output": "0 3"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "In JavaScript, `x in array` checks indexes, not values. Use `array.includes(x)` or a `Set`.",
+    "Checking `x in some_list` inside a loop in Python is slow on big lists. Make it a set first.",
+    "Plain JavaScript objects turn keys into strings; a `Map` keeps `1` and `'1'` apart."
+  ]
+}

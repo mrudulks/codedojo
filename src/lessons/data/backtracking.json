@@ -1,0 +1,84 @@
+{
+  "id": "backtracking",
+  "group": "advanced",
+  "order": 4,
+  "title": "Backtracking",
+  "summary": "Explore every combination by making a choice, going deeper, then undoing the choice and trying the next one.",
+  "tags": [
+    "backtracking"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "Choose, explore, un-choose",
+      "body": [
+        "Backtracking builds answers one decision at a time. At each step: make a choice, recurse to make the remaining choices, then undo the choice so the next option starts from a clean state.",
+        "Subsets are the simplest case: for every item, either leave it out or put it in."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function subsets(items) {\n  const result = []\n  const current = []\n  function explore(i) {\n    if (i === items.length) {\n      result.push([...current])\n      return\n    }\n    explore(i + 1)\n    current.push(items[i])\n    explore(i + 1)\n    current.pop()\n  }\n  explore(0)\n  return result\n}\nconst all = subsets(['a', 'b', 'c'])\nconsole.log(all.length)\nconsole.log(all.map((s) => s.join('') || '-').join(' '))",
+          "output": "8\n- c b bc a ac ab abc"
+        },
+        "typescript": {
+          "code": "function subsets<T>(items: T[]): T[][] {\n  const result: T[][] = []\n  const current: T[] = []\n  function explore(i: number): void {\n    if (i === items.length) {\n      result.push([...current])\n      return\n    }\n    explore(i + 1)\n    current.push(items[i])\n    explore(i + 1)\n    current.pop()\n  }\n  explore(0)\n  return result\n}\nconst all = subsets(['a', 'b', 'c'])\nconsole.log(all.length)\nconsole.log(all.map((s) => s.join('') || '-').join(' '))",
+          "output": "8\n- c b bc a ac ab abc"
+        },
+        "python": {
+          "code": "def subsets(items):\n    result = []\n    current = []\n\n    def explore(i):\n        if i == len(items):\n            result.append(current[:])\n            return\n        explore(i + 1)\n        current.append(items[i])\n        explore(i + 1)\n        current.pop()\n\n    explore(0)\n    return result\n\nall_subsets = subsets(['a', 'b', 'c'])\nprint(len(all_subsets))\nprint(' '.join(''.join(s) or '-' for s in all_subsets))",
+          "output": "8\n- c b bc a ac ab abc"
+        }
+      }
+    },
+    {
+      "heading": "Permutations: every order",
+      "body": [
+        "For orderings, each position can take any item not used yet. Keep a `used` list, mark an item before going deeper, and unmark it afterwards."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function permutations(items) {\n  const result = []\n  const current = []\n  const used = Array(items.length).fill(false)\n  function explore() {\n    if (current.length === items.length) {\n      result.push(current.join(''))\n      return\n    }\n    for (let i = 0; i < items.length; i++) {\n      if (used[i]) continue\n      used[i] = true\n      current.push(items[i])\n      explore()\n      current.pop()\n      used[i] = false\n    }\n  }\n  explore()\n  return result\n}\nconsole.log(permutations(['a', 'b', 'c']).join(' '))",
+          "output": "abc acb bac bca cab cba"
+        },
+        "typescript": {
+          "code": "function permutations(items: string[]): string[] {\n  const result: string[] = []\n  const current: string[] = []\n  const used: boolean[] = Array(items.length).fill(false)\n  function explore(): void {\n    if (current.length === items.length) {\n      result.push(current.join(''))\n      return\n    }\n    for (let i = 0; i < items.length; i++) {\n      if (used[i]) continue\n      used[i] = true\n      current.push(items[i])\n      explore()\n      current.pop()\n      used[i] = false\n    }\n  }\n  explore()\n  return result\n}\nconsole.log(permutations(['a', 'b', 'c']).join(' '))",
+          "output": "abc acb bac bca cab cba"
+        },
+        "python": {
+          "code": "def permutations(items):\n    result = []\n    current = []\n    used = [False] * len(items)\n\n    def explore():\n        if len(current) == len(items):\n            result.append(''.join(current))\n            return\n        for i, item in enumerate(items):\n            if used[i]:\n                continue\n            used[i] = True\n            current.append(item)\n            explore()\n            current.pop()\n            used[i] = False\n\n    explore()\n    return result\n\nprint(' '.join(permutations(['a', 'b', 'c'])))",
+          "output": "abc acb bac bca cab cba"
+        }
+      }
+    },
+    {
+      "heading": "Pruning: give up early",
+      "body": [
+        "The number of combinations explodes quickly, so stop exploring a branch as soon as it cannot work.",
+        "Here: find every way to pick numbers (repeats allowed) that add up to a target. The candidates are sorted, so once one is too big, all the later ones are too, and the loop can `break`. Starting the loop at `start` avoids finding the same combination in a different order."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function combinationSum(candidates, target) {\n  const result = []\n  const current = []\n  function explore(start, remaining) {\n    if (remaining === 0) {\n      result.push([...current])\n      return\n    }\n    for (let i = start; i < candidates.length; i++) {\n      if (candidates[i] > remaining) break\n      current.push(candidates[i])\n      explore(i, remaining - candidates[i])\n      current.pop()\n    }\n  }\n  explore(0, target)\n  return result\n}\nconsole.log(combinationSum([2, 3, 5], 8))",
+          "output": "[ [ 2, 2, 2, 2 ], [ 2, 3, 3 ], [ 3, 5 ] ]"
+        },
+        "typescript": {
+          "code": "function combinationSum(candidates: number[], target: number): number[][] {\n  const result: number[][] = []\n  const current: number[] = []\n  function explore(start: number, remaining: number): void {\n    if (remaining === 0) {\n      result.push([...current])\n      return\n    }\n    for (let i = start; i < candidates.length; i++) {\n      if (candidates[i] > remaining) break\n      current.push(candidates[i])\n      explore(i, remaining - candidates[i])\n      current.pop()\n    }\n  }\n  explore(0, target)\n  return result\n}\nconsole.log(combinationSum([2, 3, 5], 8))",
+          "output": "[ [ 2, 2, 2, 2 ], [ 2, 3, 3 ], [ 3, 5 ] ]"
+        },
+        "python": {
+          "code": "def combination_sum(candidates, target):\n    result = []\n    current = []\n\n    def explore(start, remaining):\n        if remaining == 0:\n            result.append(current[:])\n            return\n        for i in range(start, len(candidates)):\n            if candidates[i] > remaining:\n                break\n            current.append(candidates[i])\n            explore(i, remaining - candidates[i])\n            current.pop()\n\n    explore(0, target)\n    return result\n\nprint(combination_sum([2, 3, 5], 8))",
+          "output": "[[2, 2, 2, 2], [2, 3, 3], [3, 5]]"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Saving `current` itself instead of a copy: every saved answer is the same list, which ends up empty.",
+    "Forgetting the \"un-choose\" step (`pop`, `used[i] = false`), so choices leak into the next branch.",
+    "No pruning, so the search takes forever on slightly bigger inputs."
+  ]
+}

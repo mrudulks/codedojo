@@ -1,0 +1,69 @@
+{
+  "id": "heaps",
+  "group": "advanced",
+  "order": 6,
+  "title": "Heaps and priority queues",
+  "summary": "A structure that always hands you the smallest (or most urgent) item next, cheaply, even while new items keep arriving.",
+  "tags": [
+    "heap"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "What a heap is for",
+      "body": [
+        "Sorting once is fine when all the data is there up front. A heap is for when items keep arriving and you keep asking \"what is the smallest now?\". Adding an item and taking the smallest both cost O(log n).",
+        "- Scheduling: always run the most urgent job next.",
+        "- The `k` largest or smallest items of a long stream.",
+        "- Shortest paths on weighted graphs (Dijkstra's algorithm)."
+      ]
+    },
+    {
+      "heading": "Using one in Python",
+      "body": [
+        "Python's `heapq` module turns a plain list into a min-heap. Push tuples to give each item a priority: tuples compare by their first element first.",
+        "`heapq.nlargest` and `heapq.nsmallest` answer \"top k\" questions directly."
+      ],
+      "languages": [
+        "python"
+      ],
+      "example": {
+        "python": {
+          "code": "import heapq\n\njobs = []\nheapq.heappush(jobs, (3, 'write tests'))\nheapq.heappush(jobs, (1, 'fix the outage'))\nheapq.heappush(jobs, (2, 'review a change'))\nwhile jobs:\n    priority, name = heapq.heappop(jobs)\n    print(priority, name)\n\nprint(heapq.nlargest(2, [5, 1, 9, 3]))",
+          "output": "1 fix the outage\n2 review a change\n3 write tests\n[9, 5]"
+        }
+      }
+    },
+    {
+      "heading": "Building one in JavaScript",
+      "body": [
+        "JavaScript has no built-in heap, so here is a small one. It is an array viewed as a tree: the item at index `i` has children at `2i + 1` and `2i + 2`, and its parent is at `(i - 1) / 2` rounded down. Every parent is smaller than its children, so the smallest item is always at index 0.",
+        "- **push**: add at the end, then swap upwards while smaller than the parent.",
+        "- **pop**: take index 0, move the last item to the top, then swap it downwards with its smaller child until it fits."
+      ],
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "example": {
+        "javascript": {
+          "code": "class MinHeap {\n  #items = []\n\n  get size() {\n    return this.#items.length\n  }\n\n  push(value) {\n    const items = this.#items\n    items.push(value)\n    let i = items.length - 1\n    while (i > 0) {\n      const parent = Math.floor((i - 1) / 2)\n      if (items[parent] <= items[i]) break\n      this.#swap(parent, i)\n      i = parent\n    }\n  }\n\n  pop() {\n    const items = this.#items\n    const top = items[0]\n    const last = items.pop()\n    if (items.length > 0) {\n      items[0] = last\n      let i = 0\n      while (true) {\n        const left = 2 * i + 1\n        const right = left + 1\n        let smallest = i\n        if (left < items.length && items[left] < items[smallest]) smallest = left\n        if (right < items.length && items[right] < items[smallest]) smallest = right\n        if (smallest === i) break\n        this.#swap(smallest, i)\n        i = smallest\n      }\n    }\n    return top\n  }\n\n  #swap(a, b) {\n    const items = this.#items\n    const temp = items[a]\n    items[a] = items[b]\n    items[b] = temp\n  }\n}\n\nconst heap = new MinHeap()\nfor (const n of [5, 3, 8, 1, 4]) heap.push(n)\nconst order = []\nwhile (heap.size > 0) order.push(heap.pop())\nconsole.log(order)",
+          "output": "[ 1, 3, 4, 5, 8 ]"
+        },
+        "typescript": {
+          "code": "class MinHeap {\n  #items: number[] = []\n\n  get size(): number {\n    return this.#items.length\n  }\n\n  push(value: number): void {\n    const items = this.#items\n    items.push(value)\n    let i = items.length - 1\n    while (i > 0) {\n      const parent = Math.floor((i - 1) / 2)\n      if (items[parent] <= items[i]) break\n      this.#swap(parent, i)\n      i = parent\n    }\n  }\n\n  pop(): number | undefined {\n    const items = this.#items\n    const top = items[0]\n    const last = items.pop()\n    if (last !== undefined && items.length > 0) {\n      items[0] = last\n      let i = 0\n      while (true) {\n        const left = 2 * i + 1\n        const right = left + 1\n        let smallest = i\n        if (left < items.length && items[left] < items[smallest]) smallest = left\n        if (right < items.length && items[right] < items[smallest]) smallest = right\n        if (smallest === i) break\n        this.#swap(smallest, i)\n        i = smallest\n      }\n    }\n    return top\n  }\n\n  #swap(a: number, b: number): void {\n    const items = this.#items\n    const temp = items[a]\n    items[a] = items[b]\n    items[b] = temp\n  }\n}\n\nconst heap = new MinHeap()\nfor (const n of [5, 3, 8, 1, 4]) heap.push(n)\nconst order: number[] = []\nwhile (heap.size > 0) order.push(heap.pop()!)\nconsole.log(order)",
+          "output": "[ 1, 3, 4, 5, 8 ]"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Expecting the heap's array to be fully sorted. Only the first item is guaranteed to be the smallest.",
+    "Python's `heapq` is a min-heap only. For a max-heap, push negated priorities.",
+    "Sorting the whole list again after every insert, which is O(n log n) each time instead of O(log n)."
+  ]
+}

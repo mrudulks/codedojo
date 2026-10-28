@@ -2,6 +2,7 @@
 import { onMounted, ref, watchEffect } from 'vue'
 import AppHeader from './components/AppHeader.vue'
 import HomeView from './components/HomeView.vue'
+import LearnView from './components/LearnView.vue'
 import SettingsDialog from './components/SettingsDialog.vue'
 import TaskSidebar from './components/TaskSidebar.vue'
 import TaskView from './components/TaskView.vue'
@@ -38,6 +39,7 @@ onMounted(() => {
       <div v-if="sidebarOpen" class="scrim" aria-hidden="true" @click="sidebarOpen = false"></div>
       <main class="content">
         <HomeView v-if="tasks.view === 'home'" />
+        <LearnView v-else-if="tasks.view === 'learn'" />
         <TaskView v-else />
       </main>
     </div>

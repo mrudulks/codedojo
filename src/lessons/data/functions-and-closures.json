@@ -1,0 +1,102 @@
+{
+  "id": "functions-and-closures",
+  "group": "basics",
+  "order": 5,
+  "title": "Functions and closures",
+  "summary": "Functions take inputs and return a result; inner functions remember the variables around them.",
+  "tags": [
+    "functions",
+    "closures"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "Inputs in, one result out",
+      "body": [
+        "A function receives values (parameters) and sends one value back with `return`. The tests check what you return, not what you print.",
+        "A function that never reaches `return` gives back `undefined` (JavaScript) or `None` (Python). That is the most common reason a test says \"got undefined\"."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function area(width, height) {\n  return width * height\n}\nconst result = area(3, 4)\nconsole.log(result)",
+          "output": "12"
+        },
+        "typescript": {
+          "code": "function area(width: number, height: number): number {\n  return width * height\n}\nconst result = area(3, 4)\nconsole.log(result)",
+          "output": "12"
+        },
+        "python": {
+          "code": "def area(width, height):\n    return width * height\n\nresult = area(3, 4)\nprint(result)",
+          "output": "12"
+        }
+      }
+    },
+    {
+      "heading": "Closures: a function remembers where it was made",
+      "body": [
+        "A function created inside another function can still use the outer variables after the outer function has finished. That bundle of function plus remembered variables is a closure.",
+        "In Python, changing an outer variable needs `nonlocal`."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function makeCounter() {\n  let count = 0\n  return () => {\n    count += 1\n    return count\n  }\n}\nconst next = makeCounter()\nnext()\nconsole.log(next())",
+          "output": "2"
+        },
+        "typescript": {
+          "code": "function makeCounter(): () => number {\n  let count = 0\n  return () => {\n    count += 1\n    return count\n  }\n}\nconst next = makeCounter()\nnext()\nconsole.log(next())",
+          "output": "2"
+        },
+        "python": {
+          "code": "def make_counter():\n    count = 0\n    def step():\n        nonlocal count\n        count += 1\n        return count\n    return step\n\nnext_number = make_counter()\nnext_number()\nprint(next_number())",
+          "output": "2"
+        }
+      }
+    },
+    {
+      "heading": "Closures see the variable, not its value at the time",
+      "body": [
+        "A closure looks the variable up when it runs. If the variable kept changing, every closure sees the final value.",
+        "In JavaScript, `let` in a `for` loop makes a fresh variable for each step, which fixes this. `var` does not. In Python, pass the value in as a default argument to freeze it."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const fns = []\nfor (var i = 0; i < 3; i++) fns.push(() => i)\nconsole.log(fns.map((f) => f()))\n\nconst fixed = []\nfor (let j = 0; j < 3; j++) fixed.push(() => j)\nconsole.log(fixed.map((f) => f()))",
+          "output": "[ 3, 3, 3 ]\n[ 0, 1, 2 ]"
+        },
+        "typescript": {
+          "code": "const fns: (() => number)[] = []\nfor (var i = 0; i < 3; i++) fns.push(() => i)\nconsole.log(fns.map((f) => f()))\n\nconst fixed: (() => number)[] = []\nfor (let j = 0; j < 3; j++) fixed.push(() => j)\nconsole.log(fixed.map((f) => f()))",
+          "output": "[ 3, 3, 3 ]\n[ 0, 1, 2 ]"
+        },
+        "python": {
+          "code": "fns = [lambda: i for i in range(3)]\nprint([f() for f in fns])\n\nfixed = [lambda i=i: i for i in range(3)]\nprint([f() for f in fixed])",
+          "output": "[2, 2, 2]\n[0, 1, 2]"
+        }
+      }
+    },
+    {
+      "heading": "Default values are created once",
+      "body": [
+        "A default like `bag=[]` is made one time, when the function is defined, and then shared by every call. Items pile up between calls.",
+        "Use `None` as the default and create the list inside the function."
+      ],
+      "languages": [
+        "python"
+      ],
+      "example": {
+        "python": {
+          "code": "def add(item, bag=[]):\n    bag.append(item)\n    return bag\n\nprint(add(1))\nprint(add(2))\n\ndef add_safe(item, bag=None):\n    if bag is None:\n        bag = []\n    bag.append(item)\n    return bag\n\nprint(add_safe(1))\nprint(add_safe(2))",
+          "output": "[1]\n[1, 2]\n[1]\n[2]"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Printing the answer instead of returning it.",
+    "A missing `return` in one branch of an `if`.",
+    "Arrow functions with braces need `return`: `(n) => { n * 2 }` returns `undefined`; `(n) => n * 2` does not."
+  ]
+}

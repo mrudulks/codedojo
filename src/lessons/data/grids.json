@@ -1,0 +1,77 @@
+{
+  "id": "grids",
+  "group": "patterns",
+  "order": 7,
+  "title": "Grids and matrices",
+  "summary": "A list of rows: read cells with grid[row][col], visit every cell with two loops, and avoid shared rows.",
+  "tags": [
+    "matrix"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "A list of rows",
+      "body": [
+        "A grid is a list where each item is a row, and each row is a list of cells. `grid[row][col]`: the row comes first."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const grid = [\n  [1, 2, 3],\n  [4, 5, 6],\n]\nconsole.log(grid[1][0])\nconsole.log(grid.length, grid[0].length)",
+          "output": "4\n2 3"
+        },
+        "python": {
+          "code": "grid = [\n    [1, 2, 3],\n    [4, 5, 6],\n]\nprint(grid[1][0])\nprint(len(grid), len(grid[0]))",
+          "output": "4\n2 3"
+        }
+      }
+    },
+    {
+      "heading": "Visiting every cell",
+      "body": [
+        "Two loops, one inside the other, visit every cell. Swapping which loop is outside lets you read the grid column by column. This turns rows into columns (a \"transpose\")."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const grid = [\n  [1, 2, 3],\n  [4, 5, 6],\n]\nconst columns = []\nfor (let c = 0; c < grid[0].length; c++) {\n  const column = []\n  for (let r = 0; r < grid.length; r++) column.push(grid[r][c])\n  columns.push(column)\n}\nconsole.log(columns)",
+          "output": "[ [ 1, 4 ], [ 2, 5 ], [ 3, 6 ] ]"
+        },
+        "typescript": {
+          "code": "const grid = [\n  [1, 2, 3],\n  [4, 5, 6],\n]\nconst columns: number[][] = []\nfor (let c = 0; c < grid[0].length; c++) {\n  const column: number[] = []\n  for (let r = 0; r < grid.length; r++) column.push(grid[r][c])\n  columns.push(column)\n}\nconsole.log(columns)",
+          "output": "[ [ 1, 4 ], [ 2, 5 ], [ 3, 6 ] ]"
+        },
+        "python": {
+          "code": "grid = [\n    [1, 2, 3],\n    [4, 5, 6],\n]\ncolumns = [[row[c] for row in grid] for c in range(len(grid[0]))]\nprint(columns)",
+          "output": "[[1, 4], [2, 5], [3, 6]]"
+        }
+      }
+    },
+    {
+      "heading": "Every row must be its own list",
+      "body": [
+        "Filling a grid with the same row object makes every row the same list, so changing one cell changes the whole column. Create a fresh row for each position."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const shared = Array(2).fill([0, 0])\nshared[0][0] = 9\nconsole.log(shared)\n\nconst separate = Array.from({ length: 2 }, () => [0, 0])\nseparate[0][0] = 9\nconsole.log(separate)",
+          "output": "[ [ 9, 0 ], [ 9, 0 ] ]\n[ [ 9, 0 ], [ 0, 0 ] ]"
+        },
+        "typescript": {
+          "code": "const shared: number[][] = Array(2).fill([0, 0])\nshared[0][0] = 9\nconsole.log(shared)\n\nconst separate = Array.from({ length: 2 }, () => [0, 0])\nseparate[0][0] = 9\nconsole.log(separate)",
+          "output": "[ [ 9, 0 ], [ 9, 0 ] ]\n[ [ 9, 0 ], [ 0, 0 ] ]"
+        },
+        "python": {
+          "code": "shared = [[0, 0]] * 2\nshared[0][0] = 9\nprint(shared)\n\nseparate = [[0, 0] for _ in range(2)]\nseparate[0][0] = 9\nprint(separate)",
+          "output": "[[9, 0], [9, 0]]\n[[9, 0], [0, 0]]"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Mixing up row and column: `grid[col][row]`.",
+    "Assuming the grid is square: use the row count and the column count separately."
+  ]
+}

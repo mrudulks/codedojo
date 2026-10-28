@@ -1,0 +1,60 @@
+{
+  "id": "equality-and-hoisting",
+  "group": "language",
+  "order": 4,
+  "title": "Equality, types and hoisting",
+  "summary": "Why === is safer than ==, what typeof tells you, and how JavaScript moves declarations to the top.",
+  "tags": [
+    "types",
+    "hoisting"
+  ],
+  "languages": [
+    "javascript",
+    "typescript"
+  ],
+  "sections": [
+    {
+      "heading": "== converts, === does not",
+      "body": [
+        "`==` converts both sides to the same type before comparing, which gives surprising results. `===` only says true when both the type and the value match. Use `===`.",
+        "TypeScript reports most of these mixed comparisons as errors before the code runs, so this example is plain JavaScript."
+      ],
+      "example": {
+        "javascript": {
+          "code": "console.log(1 == '1')\nconsole.log(1 === '1')\nconsole.log(0 == '')\nconsole.log(null == undefined)\nconsole.log(null === undefined)",
+          "output": "true\nfalse\ntrue\ntrue\nfalse"
+        }
+      }
+    },
+    {
+      "heading": "typeof tells you the kind of value",
+      "body": [
+        "`typeof` gives a string naming the type. Two traps: arrays say `\"object\"` (use `Array.isArray`), and so does `null`."
+      ],
+      "example": {
+        "javascript": {
+          "code": "console.log(typeof 42, typeof 'hi', typeof true)\nconsole.log(typeof [], typeof null, typeof undefined)\nconsole.log(Array.isArray([]))",
+          "output": "number string boolean\nobject object undefined\ntrue"
+        }
+      }
+    },
+    {
+      "heading": "Hoisting",
+      "body": [
+        "Before running, JavaScript reads all declarations. Function declarations can be called before the line where they are written.",
+        "A `var` exists from the start too, but its value is `undefined` until its line runs. `let` and `const` are stricter: using them before their line throws a `ReferenceError`."
+      ],
+      "example": {
+        "javascript": {
+          "code": "console.log(sayHi())\nfunction sayHi() {\n  return 'hi'\n}\n\nconsole.log(count)\nvar count = 5\n\ntry {\n  console.log(total)\n} catch (err) {\n  console.log(err.name)\n}\nlet total = 1",
+          "output": "hi\nundefined\nReferenceError"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Using `==` and getting a \"true\" you did not expect.",
+    "Checking `typeof x === 'array'`. That is never true; use `Array.isArray(x)`.",
+    "Using `var`. Prefer `const`, and `let` when the value has to change."
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "id": "generators",
+  "group": "advanced",
+  "order": 8,
+  "title": "Iterators and generators",
+  "summary": "Functions that produce values one at a time, pausing in between, so you can work with long or even endless sequences.",
+  "tags": [
+    "generators"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "Values on demand",
+      "body": [
+        "A generator function (`function*` in JavaScript, any `def` containing `yield` in Python) does not run when you call it. It returns an iterator, and each time a value is asked for, it runs until the next `yield` and hands that value out.",
+        "`for...of` / `for...in` loops and spreading (`[...gen]`, `list(gen)`) all ask for values one by one."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function* countUp(limit) {\n  for (let n = 1; n <= limit; n++) yield n\n}\nfor (const n of countUp(3)) console.log(n)\nconsole.log([...countUp(5)])",
+          "output": "1\n2\n3\n[ 1, 2, 3, 4, 5 ]"
+        },
+        "typescript": {
+          "code": "function* countUp(limit: number): Generator<number> {\n  for (let n = 1; n <= limit; n++) yield n\n}\nfor (const n of countUp(3)) console.log(n)\nconsole.log([...countUp(5)])",
+          "output": "1\n2\n3\n[ 1, 2, 3, 4, 5 ]"
+        },
+        "python": {
+          "code": "def count_up(limit):\n    for n in range(1, limit + 1):\n        yield n\n\nfor n in count_up(3):\n    print(n)\nprint(list(count_up(5)))",
+          "output": "1\n2\n3\n[1, 2, 3, 4, 5]"
+        }
+      }
+    },
+    {
+      "heading": "Pausing and resuming",
+      "body": [
+        "You can also pull values by hand. Watch the order of the printed lines: the body does not start until the first request, and it pauses at every `yield`."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function* steps() {\n  console.log('starting')\n  yield 1\n  console.log('resumed')\n  yield 2\n}\nconst it = steps()\nconsole.log('created')\nconsole.log(it.next())\nconsole.log(it.next())\nconsole.log(it.next())",
+          "output": "created\nstarting\n{ value: 1, done: false }\nresumed\n{ value: 2, done: false }\n{ value: undefined, done: true }"
+        },
+        "python": {
+          "code": "def steps():\n    print('starting')\n    yield 1\n    print('resumed')\n    yield 2\n\nit = steps()\nprint('created')\nprint(next(it))\nprint(next(it))\nprint(next(it, 'finished'))",
+          "output": "created\nstarting\n1\nresumed\n2\nfinished"
+        }
+      }
+    },
+    {
+      "heading": "Endless sequences",
+      "body": [
+        "Because values are made only when asked for, a generator can go on forever. Take just the part you need and stop."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function* fibonacci() {\n  let a = 0\n  let b = 1\n  while (true) {\n    yield a\n    const next = a + b\n    a = b\n    b = next\n  }\n}\n\nfunction take(iterable, count) {\n  const out = []\n  if (count <= 0) return out\n  for (const value of iterable) {\n    out.push(value)\n    if (out.length === count) break\n  }\n  return out\n}\n\nconsole.log(take(fibonacci(), 10).join(' '))",
+          "output": "0 1 1 2 3 5 8 13 21 34"
+        },
+        "typescript": {
+          "code": "function* fibonacci(): Generator<number> {\n  let a = 0\n  let b = 1\n  while (true) {\n    yield a\n    const next = a + b\n    a = b\n    b = next\n  }\n}\n\nfunction take<T>(iterable: Iterable<T>, count: number): T[] {\n  const out: T[] = []\n  if (count <= 0) return out\n  for (const value of iterable) {\n    out.push(value)\n    if (out.length === count) break\n  }\n  return out\n}\n\nconsole.log(take(fibonacci(), 10).join(' '))",
+          "output": "0 1 1 2 3 5 8 13 21 34"
+        },
+        "python": {
+          "code": "from itertools import islice\n\ndef fibonacci():\n    a, b = 0, 1\n    while True:\n        yield a\n        a, b = b, a + b\n\nprint(' '.join(str(n) for n in islice(fibonacci(), 10)))",
+          "output": "0 1 1 2 3 5 8 13 21 34"
+        }
+      }
+    },
+    {
+      "heading": "A generator can only be used once",
+      "body": [
+        "Once a generator has handed out all its values, it is finished. Looping over it again gives nothing. Call the generator function again for a fresh one."
+      ],
+      "example": {
+        "javascript": {
+          "code": "function* letters() {\n  yield 'a'\n  yield 'b'\n}\nconst gen = letters()\nconsole.log([...gen])\nconsole.log([...gen])\nconsole.log([...letters()])",
+          "output": "[ 'a', 'b' ]\n[]\n[ 'a', 'b' ]"
+        },
+        "python": {
+          "code": "def letters():\n    yield 'a'\n    yield 'b'\n\ngen = letters()\nprint(list(gen))\nprint(list(gen))\nprint(list(letters()))",
+          "output": "['a', 'b']\n[]\n['a', 'b']"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Calling a generator function and expecting its body to have run.",
+    "Reusing a generator that has already been used up.",
+    "Spreading or calling `list()` on an endless generator: it never finishes."
+  ]
+}

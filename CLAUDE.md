@@ -26,6 +26,7 @@ src/
   runners/     js.worker.ts, ts.worker.ts, py.worker.ts, runner.ts (shared interface)
   harness/     per-language test harness generators
   tasks/       task JSON files, loader, schema validator
+  lessons/     study-note JSON files, loader, schema validator
   modes/       solve, fix, predict, drill, translate, refactor
   progress/    storage, stats, spaced-repetition scheduler
   components/  Vue UI components
@@ -70,3 +71,4 @@ Run `npm run build` and `npm run test` before calling a phase done.
 - Strict mode on = bulk-insertion transaction filter + paste/drop blocking; strict mode off keeps paste/drop blocking but drops the bulk filter (for IMEs/mobile keyboards).
 - Whitespace-only insertions (auto-indent, Tab) are allowed by the filter.
 - Progress: every check is an attempt in IndexedDB. The scheduler groups attempts per task+language per day (pass if any pass that day, hints = max) — see `src/progress/scheduler.ts`.
+- Study notes ("Learn") are data in `src/lessons/data/*.json` (schema in `src/lessons/schema.ts`). Each lesson lists the task tags it explains; tasks link to matching lessons, and Vitest checks every task tag has a lesson and runs every example to confirm it prints exactly its stated `output`. A TypeScript view falls back to the JavaScript example when there is no TS one.

@@ -1,0 +1,50 @@
+{
+  "id": "how-to-practice",
+  "group": "start",
+  "order": 1,
+  "title": "How to practise here",
+  "summary": "Why you type everything by hand, what each kind of task asks of you, and how reviews come back.",
+  "tags": [],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "Why you type every character",
+      "body": [
+        "Reading code feels like understanding it. Typing it is how your hands and head actually learn it. That is why paste, autocomplete and automatic closing brackets are all switched off.",
+        "Go slowly at first. Accuracy builds speed; speed does not build accuracy."
+      ]
+    },
+    {
+      "heading": "The six kinds of task",
+      "body": [
+        "- **Solve**: write a function from scratch until every test passes.",
+        "- **Fix the bug**: the code almost works. Find the one small mistake.",
+        "- **Predict the output**: read the code, write down what it prints, then run it and compare.",
+        "- **Typing drill**: copy a snippet exactly. You get speed and accuracy, not tests.",
+        "- **Translate**: working code in one language, rewrite it in another.",
+        "- **Refactor**: the code works but is messy. Keep the tests green and meet the extra rules."
+      ]
+    },
+    {
+      "heading": "When you are stuck",
+      "body": [
+        "Read the error first. It names the line, and the line is highlighted in the editor.",
+        "Look at one failing test: the input, what was expected, and what your code returned. `undefined` or `None` usually means a missing `return`.",
+        "Open the study notes linked under the task title. Hints are there too, but each hint you reveal brings the task back for review sooner."
+      ]
+    },
+    {
+      "heading": "How reviews come back",
+      "body": [
+        "Every check is saved. The Today list on the home screen uses it to choose what to practise:",
+        "- Failed: it comes back tomorrow.",
+        "- Passed with hints: it comes back in 2 days.",
+        "- Passed without hints: it comes back in 7 days, and each clean pass after that doubles the wait."
+      ]
+    }
+  ]
+}

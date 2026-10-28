@@ -1,0 +1,77 @@
+{
+  "id": "sorting",
+  "group": "patterns",
+  "order": 3,
+  "title": "Sorting",
+  "summary": "Put things in order: numbers, text, and objects by one or more fields.",
+  "tags": [
+    "sorting"
+  ],
+  "languages": [
+    "javascript",
+    "typescript",
+    "python"
+  ],
+  "sections": [
+    {
+      "heading": "Sorting numbers",
+      "body": [
+        "JavaScript's `sort()` with no argument compares items as text, so `10` comes before `9`. For numbers, pass a compare function: `(a, b) => a - b`.",
+        "Python sorts numbers correctly out of the box. `sorted(x)` gives a new list; `x.sort()` changes `x` and returns `None`."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const nums = [10, 9, 1, 100]\nconsole.log([...nums].sort())\nconsole.log([...nums].sort((a, b) => a - b))",
+          "output": "[ 1, 10, 100, 9 ]\n[ 1, 9, 10, 100 ]"
+        },
+        "python": {
+          "code": "nums = [10, 9, 1, 100]\nprint(sorted(nums))\nprint(nums)",
+          "output": "[1, 9, 10, 100]\n[10, 9, 1, 100]"
+        }
+      }
+    },
+    {
+      "heading": "Sorting by a field",
+      "body": [
+        "A JavaScript compare function returns a negative number if `a` goes first, positive if `b` goes first, and 0 for a tie.",
+        "Python asks a simpler question with `key`: \"what should I sort this item by?\""
+      ],
+      "example": {
+        "javascript": {
+          "code": "const people = [\n  { name: 'Bo', age: 30 },\n  { name: 'Al', age: 25 },\n]\npeople.sort((a, b) => a.age - b.age)\nconsole.log(people.map((p) => p.name))",
+          "output": "[ 'Al', 'Bo' ]"
+        },
+        "typescript": {
+          "code": "const people: { name: string; age: number }[] = [\n  { name: 'Bo', age: 30 },\n  { name: 'Al', age: 25 },\n]\npeople.sort((a, b) => a.age - b.age)\nconsole.log(people.map((p) => p.name))",
+          "output": "[ 'Al', 'Bo' ]"
+        },
+        "python": {
+          "code": "people = [{'name': 'Bo', 'age': 30}, {'name': 'Al', 'age': 25}]\npeople.sort(key=lambda p: p['age'])\nprint([p['name'] for p in people])",
+          "output": "['Al', 'Bo']"
+        }
+      }
+    },
+    {
+      "heading": "Breaking ties",
+      "body": [
+        "To sort by length and then alphabetically: in JavaScript, if the first comparison is 0 use `||` to fall through to the second. In Python, return a tuple from `key`; tuples compare item by item."
+      ],
+      "example": {
+        "javascript": {
+          "code": "const words = ['pear', 'fig', 'kiwi', 'apple']\nwords.sort((a, b) => a.length - b.length || a.localeCompare(b))\nconsole.log(words)",
+          "output": "[ 'fig', 'kiwi', 'pear', 'apple' ]"
+        },
+        "python": {
+          "code": "words = ['pear', 'fig', 'kiwi', 'apple']\nwords.sort(key=lambda w: (len(w), w))\nprint(words)",
+          "output": "['fig', 'kiwi', 'pear', 'apple']"
+        }
+      }
+    }
+  ],
+  "mistakes": [
+    "Sorting numbers in JavaScript without a compare function.",
+    "Returning `true`/`false` from a JavaScript compare function. It must return a number.",
+    "Writing `result = items.sort()` in Python: `result` is `None`.",
+    "Forgetting that JavaScript `sort` changes the original array. Copy it first with `[...items]` if needed."
+  ]
+}
